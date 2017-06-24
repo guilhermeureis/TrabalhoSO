@@ -9,3 +9,5 @@ thread f1
 	else
 		v 1
 
+thread f2
+	p 3

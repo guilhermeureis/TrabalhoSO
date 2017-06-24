@@ -16,7 +16,6 @@ thread f2
 	if c2
 		p 0
 		v 0
-
 thread f3
 	p 0
 	p 1

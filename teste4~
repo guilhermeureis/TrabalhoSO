@@ -1,7 +1,6 @@
 1 0
 
 thread f1
-
 	p 0
 	if c1
 		p 1
