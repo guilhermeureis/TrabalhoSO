@@ -21,5 +21,5 @@ vector<string> EntradaPadrao();
 vector<int> EntradaSemaforo();
 vector<int> ContadorTabulacao(vector<string> v);
 Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao);
-vector<int> ContarNo(vector<string> v, vector<int> tabulacao);
+
 #endif

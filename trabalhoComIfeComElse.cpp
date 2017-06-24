@@ -32,12 +32,15 @@ int main(){
 	vector<string> vetorPrincipal;
 	vector<int> vetorSemaforo;
 	vector<int> vetorContadorTabulacao;
+	vector<int> vetorQtdeDeNo;
 	vetorSemaforo = EntradaSemaforo();
 	vetorPrincipal = EntradaPadrao();
 	vetorContadorTabulacao = ContadorTabulacao(vetorPrincipal);
 	threads = HistoricoThreads(vetorPrincipal,vetorContadorTabulacao);
+	vetorQtdeDeNo = ContarNo(vetorPrincipal,vetorContadorTabulacao);
 	//ImprimiVetor(vetorContadorTabulacao);
 	ImprimiGrafo(threads);
+	//ImprimiVetor(vetorQtdeDeNo);
 	//ImprimiVetor(vetorPrincipal);	
 	//ImprimiVetor(vetorSemaforo);
 	return 0;
@@ -176,3 +179,22 @@ Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao ){
 	return grafo;
 }
 
+vector<int> ContarNo(vector<string> v, vector<int> tabulacao){
+	vector<int> vetorQuantidadeNO;
+	int aux=0;
+	cout<<v.size()<<endl;
+	for (int i = 1; i < v.size(); ++i)
+	{
+		if(tabulacao[i] == 0){
+			vetorQuantidadeNO.push_back(aux);
+			aux=0;
+			i++;
+		}
+		aux++;
+		if(i==(v.size()-1)){
+			vetorQuantidadeNO.push_back(aux);
+		}
+	}
+
+	return vetorQuantidadeNO;
+}
