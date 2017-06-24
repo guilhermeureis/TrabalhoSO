@@ -1,0 +1,20 @@
+1 0
+
+thread f1
+	p 0
+	if c1
+		p 1
+		if c3
+			p 2
+		v 0
+
+	v 1
+	v 2
+
+thread f2
+	if c2
+		p 0
+		v 0
+thread f3
+	p 0
+	p 1
