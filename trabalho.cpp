@@ -2,7 +2,7 @@
 
 // Variaveis Globais para salvar todos os caminhos possiveis
 map<string,vector<int> > mapTodosOsCaminhos;
-string auxThread;
+string auxThread = "";
 vector<int> vetorAuxCaminho;
 
 void ImprimiVetor(vector<string> v){
@@ -50,14 +50,15 @@ int main(){
 	vetorSemaforo = EntradaSemaforo();
 	vetorPrincipal = EntradaPadrao();
 	vetorContadorTabulacao = ContadorTabulacao(vetorPrincipal);
-	threads = HistoricoThreads(vetorPrincipal,vetorContadorTabulacao);
 	vetorQtdeDeNo = ContarNo(vetorPrincipal,vetorContadorTabulacao);
+	threads = HistoricoThreads(vetorPrincipal,vetorContadorTabulacao,vetorQtdeDeNo);
 	//ImprimiVetor(vetorContadorTabulacao);
 	ImprimiGrafo(threads);
 	//ImprimiVetor(vetorQtdeDeNo);
 	//ImprimiVetor(vetorPrincipal);	
 	//ImprimiVetor(vetorSemaforo);
 	caminhosGrafos(threads,vetorQtdeDeNo);
+	cout<<endl;
 	ImprimiMapeamento();
 	return 0;
 }
@@ -121,10 +122,10 @@ vector<int> ContadorTabulacao(vector<string> v){
 	return contador;
 }
 
-Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao ){
+Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao, vector<int> n){
 	
 	string aux;
-	int i=0, proxPosicao=0,aux2,posicaoELSE;
+	int i=0, proxPosicao=0,aux2,posicaoELSE,contadorNo=0;
 	bool flagUltimoElementoThread = 0;
 	vector<string> vetorAux;
 	map<string,vector<string> > mapAux;
@@ -135,11 +136,13 @@ Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao ){
 	for (int i = 0; i < v.size(); i++){ 	//percorre ate encontar o ultimo elemento so arquivo
 		if(ContadorTabulacao[i] == 0){ 		// Verifica se esse f e da threads atravez de tabulação 
 			aux = v[i];
+			if(aux.find("Final")>0)
+				contadorNo++;
 		}							//string aux recebe a linha do V[i] (f1, f2, f3, f4)
 		else{
 			if (i==(v.size()-1) || ContadorTabulacao[i+1] == 0){  			// Se é ultimo elemento do arquivo ou Se o proximo elemento e uma threads
 				flagUltimoElementoThread = 1;//
-				grafo[aux][i].push_back(-1);//grafo aponta para -1;	
+				grafo[aux][i].push_back(n[contadorNo]);//grafo aponta para -1;	
 			}
 			else{
 				int posicaoIF = v[i].find("if"); //identifica que se possui IF 
@@ -152,7 +155,7 @@ Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao ){
 							break;
 						}
 						if(k==(v.size()-1) || flagUltimoElementoThread == 1){  //Se for ultimo elemento ou ultimo elemento do arquivo
-							grafo[aux][i].push_back(-1);
+							grafo[aux][i].push_back(n[contadorNo]);
 							flagUltimoElementoThread = 0;
 							break;				
 						}
@@ -168,7 +171,7 @@ Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao ){
 							break;								
 						}
 						if(j==(v.size()-1) || ContadorTabulacao[j] == 0){
-							grafo[aux][i].push_back(-1);
+							grafo[aux][i].push_back(n[contadorNo]);
 							break;
 						}
 						
@@ -204,16 +207,16 @@ void caminhosGrafos(Thread grafo, vector<int> n){
 	Thread :: iterator i;
 	for (i=grafo.begin(); i!= grafo.end(); i++)
 	{
+
 		inicio = n[auxiliar]+1;
-		fim = -1;
-		tamanho = n[auxiliar+1]-1;
+		fim = n[auxiliar+1];
+		tamanho = n[auxiliar+1]+1;
+		
 		//Zerando o vetor "vetorAuxCaminho"
-		for (int k = 0; k < vetorAuxCaminho.size(); ++k)
-		{
-			vetorAuxCaminho.erase(vetorAuxCaminho.begin());
+		while(!vetorAuxCaminho.empty()){
+			vetorAuxCaminho.pop_back();
 		}
 		auxThread = i->first;
-		cout<<"auxThread: "<<auxThread<<endl;
 		salvaTodosCaminhos(inicio,fim,tamanho,i->second);		
 		auxiliar++;
 	}
@@ -238,17 +241,11 @@ void salvaTodosCaminhosEncontrados(int inicio, int fim, bool visitado[], int cam
 	visitado[inicio] = true;
 	caminho[indiceCaminho] = inicio;
 	indiceCaminho++;
-	if(inicio == fim){
-
-		//Não imprimir  o ultimo elemento(alterei o for)
-		cout<<endl;
+	if(inicio == fim){		
 		for (int i = 0; i < indiceCaminho; ++i){
-			cout<<caminho[i]<<" ";
 			vetorAuxCaminho.push_back(caminho[i]);
-			mapTodosOsCaminhos[auxThread] = vetorAuxCaminho;
 		}
-		cout<<"aqui"<<endl;
-		
+		mapTodosOsCaminhos[auxThread] = vetorAuxCaminho;
 	}
 	else{
 		vector< int> :: iterator i;
@@ -261,4 +258,3 @@ void salvaTodosCaminhosEncontrados(int inicio, int fim, bool visitado[], int cam
 	indiceCaminho--;
 	visitado[inicio] = false;
 }
-

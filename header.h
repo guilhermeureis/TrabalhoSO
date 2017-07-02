@@ -20,7 +20,7 @@ using namespace std;
 vector<string> EntradaPadrao();
 vector<int> EntradaSemaforo();
 vector<int> ContadorTabulacao(vector<string> v);
-Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao);
+Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao, vector<int> n);
 vector<int> ContarNo(vector<string> v, vector<int> tabulacao);
 
 void caminhosGrafos(Thread grafo, vector<int> n);
