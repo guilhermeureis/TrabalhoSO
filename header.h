@@ -22,4 +22,10 @@ vector<int> EntradaSemaforo();
 vector<int> ContadorTabulacao(vector<string> v);
 Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao);
 vector<int> ContarNo(vector<string> v, vector<int> tabulacao);
+
+void caminhosGrafos(Thread grafo, vector<int> n);
+void salvaTodosCaminhosEncontrados(int inicio, int fim, bool visitado[], int caminho[], 
+								int &indiceCaminho, map < int,vector < int > > g);
+void salvaTodosCaminhos(int inicio, int fim, int n, map < int,vector < int > > g);
 #endif
+ 
