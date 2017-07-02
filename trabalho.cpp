@@ -1,6 +1,9 @@
 #include "header.h"
 
-vector<int> aux;
+// Variaveis Globais para salvar todos os caminhos possiveis
+map<string,vector<int> > mapTodosOsCaminhos;
+string auxThread;
+vector<int> vetorAuxCaminho;
 
 void ImprimiVetor(vector<string> v){
 	for (int i = 0; i < v.size(); ++i){
@@ -11,6 +14,16 @@ void ImprimiVetor(vector<string> v){
 void ImprimiVetor(vector<int> v){
 	for (int i = 0; i < v.size(); ++i){
 		cout<<v[i]<<endl;
+	}
+}
+void ImprimiMapeamento(){
+	map<string,vector<int> > :: iterator i;
+	for (i = mapTodosOsCaminhos.begin(); i != mapTodosOsCaminhos.end(); ++i){
+		cout<<i->first<<": ";
+		for (int j = 0; j!= i->second.size(); ++j){
+			cout<<i->second[j]<<" ";
+		}
+		cout<<endl;
 	}
 }
 void ImprimiGrafo(Thread t){
@@ -45,6 +58,7 @@ int main(){
 	//ImprimiVetor(vetorPrincipal);	
 	//ImprimiVetor(vetorSemaforo);
 	caminhosGrafos(threads,vetorQtdeDeNo);
+	ImprimiMapeamento();
 	return 0;
 }
 
@@ -185,19 +199,23 @@ vector<int> ContarNo(vector<string> v, vector<int> tabulacao){
 }
 //tipo Thread == map<string, map<int, vector<int>>>
 void caminhosGrafos(Thread grafo, vector<int> n){
-	int aux,inicio, fim,tamanho;
-	aux=0;
-	for (int i = 0; i < n.size(); ++i){
-		cout<<n[i]<<endl;
-	}
+	int auxiliar,inicio, fim,tamanho;
+	auxiliar=0;
 	Thread :: iterator i;
 	for (i=grafo.begin(); i!= grafo.end(); i++)
 	{
-		inicio = n[aux]+1;
+		inicio = n[auxiliar]+1;
 		fim = -1;
-		tamanho = n[aux+1]-1;
-		salvaTodosCaminhos(inicio,fim,tamanho,i->second);
-		aux++;
+		tamanho = n[auxiliar+1]-1;
+		//Zerando o vetor "vetorAuxCaminho"
+		for (int k = 0; k < vetorAuxCaminho.size(); ++k)
+		{
+			vetorAuxCaminho.erase(vetorAuxCaminho.begin());
+		}
+		auxThread = i->first;
+		cout<<"auxThread: "<<auxThread<<endl;
+		salvaTodosCaminhos(inicio,fim,tamanho,i->second);		
+		auxiliar++;
 	}
 }
 
@@ -221,13 +239,16 @@ void salvaTodosCaminhosEncontrados(int inicio, int fim, bool visitado[], int cam
 	caminho[indiceCaminho] = inicio;
 	indiceCaminho++;
 	if(inicio == fim){
+
 		//Não imprimir  o ultimo elemento(alterei o for)
-		vector<int> v;
-		for (int i = 0; i < indiceCaminho; ++i){
-			cout<< caminho[i] << " ";
-			aux.push_back(caminho[i]);
-		}
 		cout<<endl;
+		for (int i = 0; i < indiceCaminho; ++i){
+			cout<<caminho[i]<<" ";
+			vetorAuxCaminho.push_back(caminho[i]);
+			mapTodosOsCaminhos[auxThread] = vetorAuxCaminho;
+		}
+		cout<<"aqui"<<endl;
+		
 	}
 	else{
 		vector< int> :: iterator i;
