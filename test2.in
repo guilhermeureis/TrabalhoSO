@@ -1,0 +1,16 @@
+1 1
+
+thread f1
+	p 0
+	if c1
+		p 1
+	else
+		v 0
+	v 1
+
+thread f2
+	p 1
+	p 0
+
+	v 1
+	v 0

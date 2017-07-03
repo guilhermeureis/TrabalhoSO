@@ -11,3 +11,4 @@ thread f1
 
 thread f2
 	p 3
+	p 1

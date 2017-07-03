@@ -2,21 +2,24 @@
 
 // Variaveis Globais para salvar todos os caminhos possiveis
 map<string,vector<int> > mapTodosOsCaminhos;
+vector<vector<int> > auxiliarCaminho;
 string auxThread = "";
 vector<int> vetorAuxCaminho;
+vector<pair<string,int> > maioresCaminhos;
 
-void ImprimiVetor(vector<string> v){
+void ImprimeVetor(vector<string> v){
 	for (int i = 0; i < v.size(); ++i){
 		cout<<v[i]<<endl;
 	}
 }
 
-void ImprimiVetor(vector<int> v){
+void ImprimeVetor(vector<int> v){
 	for (int i = 0; i < v.size(); ++i){
-		cout<<v[i]<<endl;
+		cout<<v[i]<<" ";
 	}
+	cout<<endl;
 }
-void ImprimiMapeamento(){
+void ImprimeMapeamento(){
 	map<string,vector<int> > :: iterator i;
 	for (i = mapTodosOsCaminhos.begin(); i != mapTodosOsCaminhos.end(); ++i){
 		cout<<i->first<<": ";
@@ -26,7 +29,7 @@ void ImprimiMapeamento(){
 		cout<<endl;
 	}
 }
-void ImprimiGrafo(Thread t){
+void ImprimeGrafo(Thread t){
 	
 	Thread :: iterator i;
 	map<int, vector<int> > :: iterator j;
@@ -40,6 +43,61 @@ void ImprimiGrafo(Thread t){
 		}
 	}
 }
+void ImprimeTuplas(){
+	vector<pair<string,int> > :: iterator i;
+
+	for (i = maioresCaminhos.begin(); i != maioresCaminhos.end(); ++i){
+		cout<<(*i).first<<" "<<(*i).second<<" ";
+	}
+	cout<<endl;	
+}
+
+void InicializarTuplas(){
+	map<string, vector<int> > :: iterator i;
+	pair<string, int> tuplaAux;
+	for (i = mapTodosOsCaminhos.begin(); i != mapTodosOsCaminhos.end(); ++i){
+		for (int j = 0; j!= i->second.size(); ++j){
+			tuplaAux.first = i->first;
+			tuplaAux.second = i->second[j];
+			maioresCaminhos.push_back(tuplaAux);
+		}
+	}
+
+}
+
+void OrdenaCaminhos(){
+
+	vector<pair<string,int> > :: iterator i;
+	pair<string, int> tuplaAux;
+	bool troca = true;
+	int total = maioresCaminhos.size();
+	int cont = 0;
+	vector<pair<string,int> > maioresCaminhosEstadoInicial = maioresCaminhos;
+	while((total/2)+1 > cont){
+		//cout<<"entrei"<<cont<<endl;
+		maioresCaminhos = maioresCaminhosEstadoInicial;
+		cont++;
+		troca = true;
+		while(troca){
+			troca = false;
+			for (i = maioresCaminhos.begin(); i != maioresCaminhos.end()-cont; ++i){
+				if((*i).first<(*(i+1)).first){
+					troca = true;		
+					int aux = cont;
+					while(aux>=0){
+						//cout<<"Entrei 2 "<<aux<<endl;		
+						tuplaAux = *i;
+						*i = *(i+aux);
+						*(i+aux) = tuplaAux;
+						aux--;
+					}
+					break;
+				}
+			}
+			ImprimeTuplas();
+		}		
+	}		
+}
 
 int main(){
 	Thread threads;
@@ -52,14 +110,22 @@ int main(){
 	vetorContadorTabulacao = ContadorTabulacao(vetorPrincipal);
 	vetorQtdeDeNo = ContarNo(vetorPrincipal,vetorContadorTabulacao);
 	threads = HistoricoThreads(vetorPrincipal,vetorContadorTabulacao,vetorQtdeDeNo);
-	//ImprimiVetor(vetorContadorTabulacao);
-	ImprimiGrafo(threads);
-	//ImprimiVetor(vetorQtdeDeNo);
-	//ImprimiVetor(vetorPrincipal);	
-	//ImprimiVetor(vetorSemaforo);
+	//ImprimeVetor(vetorContadorTabulacao);
+	ImprimeVetor(vetorQtdeDeNo);
+	ImprimeGrafo(threads);
+	//ImprimeVetor(vetorQtdeDeNo);
+	//ImprimeVetor(vetorPrincipal);	
+	//ImprimeVetor(vetorSemaforo);
 	caminhosGrafos(threads,vetorQtdeDeNo);
 	cout<<endl;
-	ImprimiMapeamento();
+	//ImprimeMapeamento();
+	InicializarTuplas();
+	ImprimeTuplas();
+	OrdenaCaminhos();
+	//ImprimeMapVectorInt();
+	//cout<<mapTodosOsCaminhosPossiveis["f1"].size()<<endl;
+	//cout<<mapTodosOsCaminhosPossiveis["f2"].size()<<endl;
+	//InicializarMapVectorTodosOsCaminhos();
 	return 0;
 }
 
@@ -216,6 +282,9 @@ void caminhosGrafos(Thread grafo, vector<int> n){
 		while(!vetorAuxCaminho.empty()){
 			vetorAuxCaminho.pop_back();
 		}
+		while(!auxiliarCaminho.empty()){
+			auxiliarCaminho.pop_back();
+		}
 		auxThread = i->first;
 		salvaTodosCaminhos(inicio,fim,tamanho,i->second);		
 		auxiliar++;
@@ -242,10 +311,19 @@ void salvaTodosCaminhosEncontrados(int inicio, int fim, bool visitado[], int cam
 	caminho[indiceCaminho] = inicio;
 	indiceCaminho++;
 	if(inicio == fim){		
+		
 		for (int i = 0; i < indiceCaminho; ++i){
 			vetorAuxCaminho.push_back(caminho[i]);
+			//cout<<caminho[i]<<" ";
+			//mapTodosOsCaminhos[auxThread] = vetorAuxCaminho;
 		}
 		mapTodosOsCaminhos[auxThread] = vetorAuxCaminho;
+		auxiliarCaminho.push_back(vetorAuxCaminho); 
+		while(!vetorAuxCaminho.empty()){
+			vetorAuxCaminho.pop_back();
+		}
+		//cout<<endl;
+
 	}
 	else{
 		vector< int> :: iterator i;
