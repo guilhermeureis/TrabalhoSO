@@ -338,6 +338,7 @@ void OrdenaCaminhos(Thread t, vector<string> v, vector<int> disponivel){
 		}
 
 		ImprimeVetor(caminhoAleatorio);
+		ImprimeVetor(disponivel);
 		if(AlgoritmoBanqueiro (t,v,disponivel,caminhoAleatorio) == true)
 			return;
 		
@@ -380,10 +381,10 @@ bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel, vec
 	
 	for(int i=0; i<combinacoes.size();i++){		
 		Threads = EncontraThreads(t,combinacoes,i); // descobrimos de qual threads e o P ou v
-		//cout<<"Thread: "<<Threads<<endl;			
+		cout<<"Thread: "<<Threads<<endl;			
 		if (PeV[i] == 'p'){  // encontramos o P
 			//Threads = EncontraThreads(t,combinacoes,i); // descobrimos de qual threads e o P 
-			//cout<< "entrei no PPPPPPPPP:  " << endl;
+			cout<< "entrei no PPPPPPPPP:  " << endl;
 			for(aloc = alocacao.begin(),nesc=necessidade.begin(); aloc != alocacao.end()  && nesc != alocacao.end() ; aloc++,nesc++){	
 				if(aloc->first== Threads && nesc->first== Threads){				//descobrimos a coluna na matriz esta aquele ptem que alterar 
 					nesc->second[numeros[i]]++;
@@ -404,14 +405,14 @@ bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel, vec
 		}
 		if (PeV[i] == 'v'){
 			//Threads = EncontraThreads(t,combinacoes,i);
-			//cout<< "entrei no VVVVVVVVVVVVVVV:  " << endl;	
+			cout<< "entrei no VVVVVVVVVVVVVVV:  " << endl;	
 			for(aloc = alocacao.begin(),nesc=necessidade.begin(); aloc!= alocacao.end() && nesc!= alocacao.end() ; aloc++,nesc++){	
 				if(aloc->first == Threads ){				//descobrimos a coluna na matriz esta aquele ptem que alterar 
-					if(nesc->second[numeros[i]]>0){
+					/*if(nesc->second[numeros[i]]>0){
 							nesc->second[numeros[i]]--;
 							aloc->second[numeros[i]]++;
 						
-						}
+						}*/
 					if(aloc->second[numeros[i]]==0){
 						//printf("não tem menoria para liberar"); 
 							
@@ -438,16 +439,18 @@ bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel, vec
 				}
 	 		}
 		}
-		//cout<< "necessidade" <<endl;	
-		//ImprimeMapeamento(necessidade);
-		//cout<< "alocacao" <<endl;
-		//ImprimeMapeamento(alocacao);
+		cout<< "disponivel" <<endl;
+		ImprimeVetor(disponivel);
+		cout<< "necessidade" <<endl;	
+		ImprimeMapeamento(necessidade);
+		cout<< "alocacao" <<endl;
+		ImprimeMapeamento(alocacao);
 
 		if (EncontraDeadlock(necessidade,alocacao, disponivel) == true){
 			cout << "dead lock"<< endl;
 			for(int o=0; o<=i;o++){
 				Threads = EncontraThreads(t,combinacoes,o);
-				cout << Threads<< ":" <<PeV[o] << numeros[o]<< " " << combinacoes[o] << endl;
+				cout << Threads<< ": " <<v[combinacoes[o]] << endl;
 			}//printar o caminhos com deadlock;
 			return true;	
 		}
