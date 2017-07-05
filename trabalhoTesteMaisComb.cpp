@@ -19,16 +19,6 @@ void ImprimeVetor(vector<int> v){
 	}
 	cout<<endl;
 }
-void ImprimeMapeamento( map<string, vector<int> > mapCaminhos){
-	map<string,vector<int> > :: iterator i;
-	for (i = mapCaminhos.begin(); i != mapCaminhos.end(); ++i){
-		cout<<i->first<<": ";
-		for (int j = 0; j!= i->second.size(); ++j){
-			cout<<i->second[j]<<" ";
-		}
-		cout<<endl;
-	}
-}
 void ImprimeMapeamento(){
 	map<string,vector<int> > :: iterator i;
 	for (i = mapTodosOsCaminhos.begin(); i != mapTodosOsCaminhos.end(); ++i){
@@ -84,8 +74,8 @@ int main(){
 	cout<<endl;
 	//ImprimeMapeamento();
 	InicializarTuplas();
-	//ImprimeTuplas();
-	OrdenaCaminhos(threads,vetorPrincipal,vetorSemaforo,vetorQtdeDeNo);
+	ImprimeTuplas();
+	OrdenaCaminhos();
 	//ImprimeMapVectorInt();
 	//cout<<mapTodosOsCaminhosPossiveis["f1"].size()<<endl;
 	//cout<<mapTodosOsCaminhosPossiveis["f2"].size()<<endl;
@@ -275,7 +265,7 @@ void salvaTodosCaminhosEncontrados(int inicio, int fim, bool visitado[], int cam
 	indiceCaminho++;
 	if(inicio == fim){		
 		
-		for (int i = 0; i < indiceCaminho-1; ++i){
+		for (int i = 0; i < indiceCaminho; ++i){
 			vetorAuxCaminho.push_back(caminho[i]);
 			//cout<<caminho[i]<<" ";
 			//mapTodosOsCaminhos[auxThread] = vetorAuxCaminho;
@@ -312,262 +302,54 @@ void InicializarTuplas(){
 
 }
 
-void OrdenaCaminhos(Thread t, vector<string> v, vector<int> disponivel, vector<int> qtdeThread){
+void OrdenaCaminhos(){
 
 	vector<pair<string,int> > :: iterator i;
-	map<int, vector<int> > :: iterator aux;
-	Thread :: iterator j;
 	pair<string, int> tuplaAux;
 	bool troca = true;
 	int total = maioresCaminhos.size();
 	int cont = 0;
-	vector<string> teste;
-	vector<int> caminhoAleatorio;
-	map<string,int> auxCaminhoAleatorio;
-	//ImprimeVetor(auxCaminhoAleatorio);
-	ImprimeVetor(qtdeThread);
 	vector<pair<string,int> > maioresCaminhosEstadoInicial = maioresCaminhos;
-	for (j = t.begin(); j != t.end(); ++j){
-		for (aux = j->second.begin(); aux != j->second.end(); ++aux)
-		{
-			teste.push_back(j->first);
-			cout<<j->first<<endl;	
-		}
-		auxCaminhoAleatorio[j->first] = 0;
-	}
-	bool resultado;
-	while(resultado = next_permutation(teste.begin(),teste.end())){
-		
-		for (int k = 0; k<teste.size(); ++k){
-			for (i = maioresCaminhos.begin(); i != maioresCaminhos.end(); ++i){
-				if((*i).first == teste[k]){
-					if(){
-						
-					}
-					break;
-				}
-			}
-
-			//cout<<teste[k]<<" ";
-		}
-		//cout<<endl;
-	}
-	/*while((total/2)+1 > cont){
-		//cout<<"entrei"<<cont<<endl;
-		maioresCaminhos = maioresCaminhosEstadoInicial;
-		cont++;
-		troca = true;
-		while(troca){
-			troca = false;
-			for (i = maioresCaminhos.begin(); i != maioresCaminhos.end()-cont; ++i){
-				if((*i).first<(*(i+1)).first){
-					troca = true;		
-					int aux = cont;
-					while(aux>=0){
-						//cout<<"Entrei 2 "<<aux<<endl;		
-						tuplaAux = *i;
-						*i = *(i+aux);
-						*(i+aux) = tuplaAux;
-						aux--;
-					}
-					//cout<<"Entrei 1 "<<endl;
-					//ImprimeTuplas();
-					//if(AlgoritmoBanqueiro(t,v,disponivel))
-					//	return;
-					//break;
-				}
-				
-			}
-			
-			
-		}		
-	}*/		
-}
-bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel){
-	
-	vector<int> combinacoes;
-	vector<pair<string,int> > :: iterator i;
-	map<string,vector<int> > necessidade;
-	map<string,vector<int> > alocacao; //matriz de alocação
-	vector<int> iniciaVetor;
-	iniciaVetor.resize(disponivel.size());
-	Thread :: iterator inicial;		
-	
-	
-	for (i = maioresCaminhos.begin(); i != maioresCaminhos.end(); ++i){
-		combinacoes.push_back((*i).second);
-	}
-
-	cout<<endl;
-	ImprimeVetor(combinacoes);
-	cout<<endl;
-	for (inicial = t.begin(); inicial != t.end(); ++inicial){
-		necessidade[inicial->first] = iniciaVetor;
-		alocacao[inicial->first] = iniciaVetor;		
-	}
-	
-	
-	int numeros[combinacoes.size()];
-	char PeV[combinacoes.size()];
-	stringstream buffer;
-	
-	for(int i=0; i<combinacoes.size();i++){
-			buffer<<v[combinacoes[i]];
-			buffer >> PeV[i]; 
-			buffer >> numeros[i]; 
-			//cout << "PeV " << PeV[i] << " Numeros " << numeros[i] << "\n" << endl;
-			buffer.clear();
-	}
-
-	map<string, vector<int> > :: iterator aloc;
-	map<string, vector<int> > :: iterator nesc;		
-	string Threads;
-	
-	for(int i=0; i<combinacoes.size();i++){		
-		Threads = EncontraThreads(t,combinacoes,i); // descobrimos de qual threads e o P ou v
-		//cout<<"Thread: "<<Threads<<endl;			
-		if (PeV[i] == 'p'){  // encontramos o P
-			//Threads = EncontraThreads(t,combinacoes,i); // descobrimos de qual threads e o P 
-			//cout<< "entrei no PPPPPPPPP:  " << endl;
-			for(aloc = alocacao.begin(),nesc=necessidade.begin(); aloc != alocacao.end()  && nesc != alocacao.end() ; aloc++,nesc++){	
-				//cout<<"FOR"<<endl;
-				if(aloc->first== Threads && nesc->first== Threads){				//descobrimos a coluna na matriz esta aquele ptem que alterar 
-					//ImprimeMapeamento(alocacao);
-					//ImprimeMapeamento(necessidade);
-					nesc->second[numeros[i]]++;
-					if(disponivel[numeros[i]]!= 0){
-						aloc->second[numeros[i]]++;
-						disponivel[numeros[i]]--;
-						nesc->second[numeros[i]]--;
-						//printf("esta travado\n");
-					}
-					//else{
-						//printf("não esta travado\n");
-					//	aloc->second[numeros[i]]++;
-					//	disponivel[numeros[i]]--;
-					//	nesc->second[numeros[i]]--;
-					//}
-				}
-			}
-		}
-		if (PeV[i] == 'v'){
-			//Threads = EncontraThreads(t,combinacoes,i);
-			//cout<< "entrei no VVVVVVVVVVVVVVV:  " << endl;	
-			for(aloc = alocacao.begin(),nesc=necessidade.begin(); aloc!= alocacao.end() && nesc!= alocacao.end() ; aloc++,nesc++){	
-				if(aloc->first == Threads ){				//descobrimos a coluna na matriz esta aquele ptem que alterar 
-					if(aloc->second[numeros[i]]==0){
-						//printf("não tem menoria para liberar"); 
-						disponivel[numeros[i]]++;	
-						map<string, vector<int> > :: iterator auxiliar;
-						auxiliar = alocacao.begin();
-						while(1){
-							if (auxiliar->second[numeros[i]] > 0){
-								auxiliar->second[numeros[i]]--;
-								break;		
-							}
-							if(auxiliar == alocacao.end()){
-								break;
-							}
-						auxiliar++;
+	while(1){
+		cout<<"entrei: "<<cont<<endl;
+		if ((total/2)+1 > cont){
+			maioresCaminhos = maioresCaminhosEstadoInicial;
+			cont++;
+			troca = true;
+			while(troca){
+				troca = false;
+				for (i = maioresCaminhos.begin(); i != maioresCaminhos.end()-cont; ++i){
+					if((*i).first<(*(i+1)).first){
+						troca = true;		
+						int aux = cont;
+						while(aux>=0){
+							//cout<<"Entrei 2 "<<aux<<endl;		
+							tuplaAux = *i;
+							*i = *(i+aux);
+							*(i+aux) = tuplaAux;
+							aux--;
 						}
-					}
-					else{	
-						aloc->second[numeros[i]]--;
-						disponivel[numeros[i]]++;
+						break;
 					}
 				}
-	 		}
-		}
-		cout<< "necessidade" <<endl;	
-		ImprimeMapeamento(necessidade);
-		cout<< "alocacao" <<endl;
-		ImprimeMapeamento(alocacao);
-
-		if (EncontraDeadlock(necessidade,alocacao, disponivel) == true){
-			cout << "dead lock"<< endl;
-			for(int o=0; o<=i;o++){
-				Threads = EncontraThreads(t,combinacoes,o);
-				cout << Threads<< ":" <<PeV[o] << numeros[o]<< " " << combinacoes[o] << endl;
-			}//printar o caminhos com deadlock;
-			return true;	
-		}
-		//verificar matriz de nescessida se esta em deadlock
-	}
-	return false;
-}
-
-string EncontraThreads(Thread t, vector<int>combinacoes, int l){
-	
-	Thread :: iterator i;
-	map<int, vector<int> > :: iterator j;
-	
-	for (i = t.begin(); i != t.end(); ++i){
-		for (j = i->second.begin(); j != i->second.end(); ++j){
-			if(j->first == combinacoes[l]){
-				string threads = i->first;
-				return threads;
-			}
-			//for (int k = 0; k < j->second.size(); ++k){
-			//	cout<<i->first<<" "<<j->first<<" "<<j->second[k]<<endl;
-			//}
-		}
-	}
-	string aux = "nao encontrado";
-	return aux;
-}
-bool EncontraDeadlock (map<string, vector<int> > necessidade, map<string, vector<int> > alocacao, vector <int> disponivel){
-	int deadlock = 0;
-	vector<bool> termino;
-	termino.resize(2);
-	int cont=0, k=0;
-	for(int i=0; i<termino.size();i++){
-		termino[i] = true;	
-	}
-	map<string, vector<int> > :: iterator j;
-	map<string, vector<int> > :: iterator aloc;
-
-	for(aloc = alocacao.begin(); aloc!= alocacao.end() ;aloc++){
-		cont = 0;
-		for(int i = 0;i<aloc->second.size();i++){
-			if(aloc->second[i] == 0){
-				cont++;
+				ImprimeTuplas();
 			}
 		}
-		if(cont != aloc->second.size()){
-			termino[k] = false;
-			cout << "termino["<<k<<"]: "<< termino[k] << endl;		
-			}
-	k++;
-	}
-	k=0;
-	for(aloc = alocacao.begin(),j = necessidade.begin(); aloc != alocacao.end() && j != necessidade.end() ; aloc++,j++){
-		cont = 0;
-		if(termino[k] == false ){
-			for(int i = 0; i<j->second.size();i++){
-				if(j->second[i] <= disponivel[i]){
-					cont++;
-					cout << "cont:  " << cont << endl;
+		else{
+			/*int i, j, min, aux;
+			for (i=0; i<tam-1; i++) {
+				min = i;
+				for (j=i+1; j<tam; j++) {
+					if (vec[j] < vec[min])
+						min = j;
 				}
-			}	
-			if(cont == j->second.size()){
-				for(int l=0; l<termino.size(); l++){
-					disponivel[l] = disponivel[l] + aloc->second[l]; 	
-				}
-				termino[k] = true;
-			}
-		}	
-	k++;
-	}
-	for(k =0; k<termino.size(); k++){
-		if(termino[k] == false){
-			deadlock++;
-			}
-	}
-	if(deadlock > 1){
-		return true;
-	}
-	else{
-		return false;
-	}	
+				aux = vec[i];
+				vec[i] = vec[min];
+				vec[min] = aux;
+			}*/
+			break;
+		}
+
+	}		
 }
 

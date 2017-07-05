@@ -1,15 +1,11 @@
 1 1
 
 thread f1
-	p 1
 	p 0
-
-	v 0
-	v 1
+	p 1
+	v 3
 
 thread f2
-	p 0
 	p 1
-
-	v 1
-	v 0
+	p 0
+	v 2

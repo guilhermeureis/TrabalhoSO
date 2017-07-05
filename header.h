@@ -2,7 +2,7 @@
 #define HEADER_H
 
 /* Bibliotecas */
-
+#include <bits/stdc++.h>
 #include <string>
 #include <iostream>
 #include <vector>
@@ -22,10 +22,13 @@ vector<int> EntradaSemaforo();
 vector<int> ContadorTabulacao(vector<string> v);
 Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao, vector<int> n);
 vector<int> ContarNo(vector<string> v, vector<int> tabulacao);
-
 void caminhosGrafos(Thread grafo, vector<int> n);
-void salvaTodosCaminhosEncontrados(int inicio, int fim, bool visitado[], int caminho[], 
-								int &indiceCaminho, map < int,vector < int > > g);
+void salvaTodosCaminhosEncontrados(int inicio, int fim, bool visitado[], int caminho[], int &indiceCaminho, map < int,vector < int > > g);
 void salvaTodosCaminhos(int inicio, int fim, int n, map < int,vector < int > > g);
+bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel);
+string EncontraThreads(Thread t, vector<int>combinacoes, int l);
+void InicializarTuplas();
+void OrdenaCaminhos(Thread t, vector<string> v, vector<int> disponivel, vector<int> qtdeThread);
+bool EncontraDeadlock (map<string, vector<int> > necessidade, map<string, vector<int> > alocacao, vector <int> disponivel);
 #endif
  
