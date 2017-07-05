@@ -28,7 +28,7 @@ void salvaTodosCaminhos(int inicio, int fim, int n, map < int,vector < int > > g
 bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel);
 string EncontraThreads(Thread t, vector<int>combinacoes, int l);
 void InicializarTuplas();
-void OrdenaCaminhos(Thread t, vector<string> v, vector<int> disponivel, vector<int> qtdeThread);
+void OrdenaCaminhos(Thread t, vector<string> v, vector<int> disponivel);
 bool EncontraDeadlock (map<string, vector<int> > necessidade, map<string, vector<int> > alocacao, vector <int> disponivel);
 #endif
  

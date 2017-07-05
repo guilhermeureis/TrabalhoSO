@@ -82,14 +82,11 @@ int main(){
 	//ImprimeVetor(vetorSemaforo);
 	caminhosGrafos(threads,vetorQtdeDeNo);
 	cout<<endl;
-	//ImprimeMapeamento();
+	ImprimeMapeamento();
 	InicializarTuplas();
 	//ImprimeTuplas();
-	OrdenaCaminhos(threads,vetorPrincipal,vetorSemaforo,vetorQtdeDeNo);
-	//ImprimeMapVectorInt();
-	//cout<<mapTodosOsCaminhosPossiveis["f1"].size()<<endl;
-	//cout<<mapTodosOsCaminhosPossiveis["f2"].size()<<endl;
-	//InicializarMapVectorTodosOsCaminhos();
+	//OrdenaCaminhos(threads,vetorPrincipal,vetorSemaforo);
+	
 	return 0;
 }
 
@@ -177,10 +174,11 @@ Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao, vector<
 			else{
 				int posicaoIF = v[i].find("if"); //identifica que se possui IF 
 				if(posicaoIF > -1){              //caso encontre o if, valor da posição sera maior que -1
-					int k=i;					// cria uma variavel contador para percorrer ate o final do IF	
+					int k=i;
+					cout<<k<<endl;						// cria uma variavel contador para percorrer ate o final do IF	
 					do{			
-						k++;				
-						if((ContadorTabulacao[i]==ContadorTabulacao[k])) { //determina se e um else e se e o else daquele if pela tabulação 
+						k++;										
+						if((ContadorTabulacao[i]==ContadorTabulacao[k])||(ContadorTabulacao[k]==0)) { //determina se e um else e se e o else daquele if pela tabulação 
  							grafo[aux][i].push_back(k);
 							break;
 						}
@@ -189,6 +187,8 @@ Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao, vector<
 							flagUltimoElementoThread = 0;
 							break;				
 						}
+						
+
 					}while(1);
 				}
 				posicaoELSE = v[i+1].find("else"); //proximo elemento e o else 
@@ -275,9 +275,9 @@ void salvaTodosCaminhosEncontrados(int inicio, int fim, bool visitado[], int cam
 	indiceCaminho++;
 	if(inicio == fim){		
 		
-		for (int i = 0; i < indiceCaminho-1; ++i){
+		for (int i = 0; i < indiceCaminho; ++i){
 			vetorAuxCaminho.push_back(caminho[i]);
-			//cout<<caminho[i]<<" ";
+			cout<<caminho[i]<<" ";
 			//mapTodosOsCaminhos[auxThread] = vetorAuxCaminho;
 		}
 		mapTodosOsCaminhos[auxThread] = vetorAuxCaminho;
@@ -285,7 +285,7 @@ void salvaTodosCaminhosEncontrados(int inicio, int fim, bool visitado[], int cam
 		while(!vetorAuxCaminho.empty()){
 			vetorAuxCaminho.pop_back();
 		}
-		//cout<<endl;
+		cout<<endl;
 
 	}
 	else{
@@ -312,76 +312,41 @@ void InicializarTuplas(){
 
 }
 
-void OrdenaCaminhos(Thread t, vector<string> v, vector<int> disponivel, vector<int> qtdeThread){
+void OrdenaCaminhos(Thread t, vector<string> v, vector<int> disponivel){
 
 	vector<pair<string,int> > :: iterator i;
 	map<int, vector<int> > :: iterator aux;
 	Thread :: iterator j;
-	pair<string, int> tuplaAux;
-	bool troca = true;
-	int total = maioresCaminhos.size();
-	int cont = 0;
-	vector<string> teste;
-	vector<int> caminhoAleatorio;
-	map<string,int> auxCaminhoAleatorio;
-	//ImprimeVetor(auxCaminhoAleatorio);
-	ImprimeVetor(qtdeThread);
+	vector<string> vetorAux;
+	bool resultado;
+	//
 	vector<pair<string,int> > maioresCaminhosEstadoInicial = maioresCaminhos;
 	for (j = t.begin(); j != t.end(); ++j){
 		for (aux = j->second.begin(); aux != j->second.end(); ++aux)
 		{
-			teste.push_back(j->first);
+			vetorAux.push_back(j->first);
 			cout<<j->first<<endl;	
 		}
-		auxCaminhoAleatorio[j->first] = 0;
-	}
-	bool resultado;
-	while(resultado = next_permutation(teste.begin(),teste.end())){
 		
-		for (int k = 0; k<teste.size(); ++k){
+	}
+	
+	do{
+		vector<int> caminhoAleatorio;
+		maioresCaminhos = maioresCaminhosEstadoInicial;
+		for (int k = 0; k<vetorAux.size(); ++k){
 			for (i = maioresCaminhos.begin(); i != maioresCaminhos.end(); ++i){
-				if((*i).first == teste[k]){
-					if(){
-						
-					}
+				if((*i).first == vetorAux[k]){
+					caminhoAleatorio.push_back((*i).second);
+					maioresCaminhos.erase(i);
 					break;
 				}
 			}
-
-			//cout<<teste[k]<<" ";
 		}
-		//cout<<endl;
-	}
-	/*while((total/2)+1 > cont){
-		//cout<<"entrei"<<cont<<endl;
-		maioresCaminhos = maioresCaminhosEstadoInicial;
-		cont++;
-		troca = true;
-		while(troca){
-			troca = false;
-			for (i = maioresCaminhos.begin(); i != maioresCaminhos.end()-cont; ++i){
-				if((*i).first<(*(i+1)).first){
-					troca = true;		
-					int aux = cont;
-					while(aux>=0){
-						//cout<<"Entrei 2 "<<aux<<endl;		
-						tuplaAux = *i;
-						*i = *(i+aux);
-						*(i+aux) = tuplaAux;
-						aux--;
-					}
-					//cout<<"Entrei 1 "<<endl;
-					//ImprimeTuplas();
-					//if(AlgoritmoBanqueiro(t,v,disponivel))
-					//	return;
-					//break;
-				}
-				
-			}
-			
-			
-		}		
-	}*/		
+
+		ImprimeVetor(caminhoAleatorio);
+		
+	}while(resultado = next_permutation(vetorAux.begin(),vetorAux.end()));
+	
 }
 bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel){
 	
