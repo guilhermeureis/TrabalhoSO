@@ -1,31 +1,17 @@
-1 0
-
-thread f1
 	p 0
 	if c1
 		p 1
 		if c3
-			p 2
-			p 5
-		else
-			v 0
 			v 1
-		p 6
-	v2
 thread f2
 	if c2
 		p 0
 		v 0
-
 thread f3
-	p 0
-	p 1
 	if c4
 		v 1
-	else
-		v 2
 
 thread f4
 	p 3
 	if c5
-		v3
+		v 3

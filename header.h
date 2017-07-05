@@ -25,7 +25,7 @@ vector<int> ContarNo(vector<string> v, vector<int> tabulacao);
 void caminhosGrafos(Thread grafo, vector<int> n);
 void salvaTodosCaminhosEncontrados(int inicio, int fim, bool visitado[], int caminho[], int &indiceCaminho, map < int,vector < int > > g);
 void salvaTodosCaminhos(int inicio, int fim, int n, map < int,vector < int > > g);
-bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel);
+bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel, vector<int> combinacoes);
 string EncontraThreads(Thread t, vector<int>combinacoes, int l);
 void InicializarTuplas();
 void OrdenaCaminhos(Thread t, vector<string> v, vector<int> disponivel);

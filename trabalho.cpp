@@ -12,7 +12,6 @@ void ImprimeVetor(vector<string> v){
 		cout<<v[i]<<endl;
 	}
 }
-
 void ImprimeVetor(vector<int> v){
 	for (int i = 0; i < v.size(); ++i){
 		cout<<v[i]<<" ";
@@ -62,7 +61,6 @@ void ImprimeTuplas(){
 	cout<<endl;	
 }
 
-
 int main(){
 	Thread threads;
 	vector<string> vetorPrincipal;
@@ -75,17 +73,17 @@ int main(){
 	vetorQtdeDeNo = ContarNo(vetorPrincipal,vetorContadorTabulacao);
 	threads = HistoricoThreads(vetorPrincipal,vetorContadorTabulacao,vetorQtdeDeNo);
 	//ImprimeVetor(vetorContadorTabulacao);
-	ImprimeVetor(vetorQtdeDeNo);
-	ImprimeGrafo(threads);
+	//ImprimeVetor(vetorQtdeDeNo);
+	//ImprimeGrafo(threads);
 	//ImprimeVetor(vetorQtdeDeNo);
 	//ImprimeVetor(vetorPrincipal);	
 	//ImprimeVetor(vetorSemaforo);
 	caminhosGrafos(threads,vetorQtdeDeNo);
-	cout<<endl;
-	ImprimeMapeamento();
+	//cout<<endl;
+	//ImprimeMapeamento();
 	InicializarTuplas();
 	//ImprimeTuplas();
-	//OrdenaCaminhos(threads,vetorPrincipal,vetorSemaforo);
+	OrdenaCaminhos(threads,vetorPrincipal,vetorSemaforo);
 	
 	return 0;
 }
@@ -112,7 +110,6 @@ vector<string> EntradaPadrao(){
 	v.push_back("Final");
 	return v;
 }
-
 vector<int> EntradaSemaforo(){
 	
 	stringstream buffer;
@@ -132,7 +129,6 @@ vector<int> EntradaSemaforo(){
 	}
 	return v;
 }
-
 vector<int> ContadorTabulacao(vector<string> v){
 	int cont;
 	vector<int> contador;
@@ -148,7 +144,6 @@ vector<int> ContadorTabulacao(vector<string> v){
 	}
 	return contador;
 }
-
 Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao, vector<int> n){
 	
 	string aux;
@@ -175,7 +170,7 @@ Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao, vector<
 				int posicaoIF = v[i].find("if"); //identifica que se possui IF 
 				if(posicaoIF > -1){              //caso encontre o if, valor da posição sera maior que -1
 					int k=i;
-					cout<<k<<endl;						// cria uma variavel contador para percorrer ate o final do IF	
+					//cout<<k<<endl;						// cria uma variavel contador para percorrer ate o final do IF	
 					do{			
 						k++;										
 						if((ContadorTabulacao[i]==ContadorTabulacao[k])||(ContadorTabulacao[k]==0)) { //determina se e um else e se e o else daquele if pela tabulação 
@@ -218,7 +213,6 @@ Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao, vector<
 	}	
 	return grafo;
 }
-
 vector<int> ContarNo(vector<string> v, vector<int> tabulacao){
 	vector<int> vetorQuantidadeNO;
 	for (int i = 0; i < v.size(); ++i)
@@ -230,7 +224,7 @@ vector<int> ContarNo(vector<string> v, vector<int> tabulacao){
 
 	return vetorQuantidadeNO;
 }
-//tipo Thread == map<string, map<int, vector<int>>>
+
 void caminhosGrafos(Thread grafo, vector<int> n){
 	int auxiliar,inicio, fim,tamanho;
 	auxiliar=0;
@@ -277,7 +271,7 @@ void salvaTodosCaminhosEncontrados(int inicio, int fim, bool visitado[], int cam
 		
 		for (int i = 0; i < indiceCaminho; ++i){
 			vetorAuxCaminho.push_back(caminho[i]);
-			cout<<caminho[i]<<" ";
+			//cout<<caminho[i]<<" ";
 			//mapTodosOsCaminhos[auxThread] = vetorAuxCaminho;
 		}
 		mapTodosOsCaminhos[auxThread] = vetorAuxCaminho;
@@ -285,7 +279,7 @@ void salvaTodosCaminhosEncontrados(int inicio, int fim, bool visitado[], int cam
 		while(!vetorAuxCaminho.empty()){
 			vetorAuxCaminho.pop_back();
 		}
-		cout<<endl;
+		//cout<<endl;
 
 	}
 	else{
@@ -325,7 +319,7 @@ void OrdenaCaminhos(Thread t, vector<string> v, vector<int> disponivel){
 		for (aux = j->second.begin(); aux != j->second.end(); ++aux)
 		{
 			vetorAux.push_back(j->first);
-			cout<<j->first<<endl;	
+			//cout<<j->first<<endl;	
 		}
 		
 	}
@@ -344,13 +338,15 @@ void OrdenaCaminhos(Thread t, vector<string> v, vector<int> disponivel){
 		}
 
 		ImprimeVetor(caminhoAleatorio);
+		if(AlgoritmoBanqueiro (t,v,disponivel,caminhoAleatorio) == true)
+			return;
 		
 	}while(resultado = next_permutation(vetorAux.begin(),vetorAux.end()));
 	
 }
-bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel){
+bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel, vector<int> combinacoes){
 	
-	vector<int> combinacoes;
+
 	vector<pair<string,int> > :: iterator i;
 	map<string,vector<int> > necessidade;
 	map<string,vector<int> > alocacao; //matriz de alocação
@@ -358,19 +354,13 @@ bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel){
 	iniciaVetor.resize(disponivel.size());
 	Thread :: iterator inicial;		
 	
-	
-	for (i = maioresCaminhos.begin(); i != maioresCaminhos.end(); ++i){
-		combinacoes.push_back((*i).second);
-	}
 
-	cout<<endl;
-	ImprimeVetor(combinacoes);
-	cout<<endl;
+	//ImprimeVetor(combinacoes);
+	//cout<<endl;
 	for (inicial = t.begin(); inicial != t.end(); ++inicial){
 		necessidade[inicial->first] = iniciaVetor;
 		alocacao[inicial->first] = iniciaVetor;		
 	}
-	
 	
 	int numeros[combinacoes.size()];
 	char PeV[combinacoes.size()];
@@ -395,10 +385,7 @@ bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel){
 			//Threads = EncontraThreads(t,combinacoes,i); // descobrimos de qual threads e o P 
 			//cout<< "entrei no PPPPPPPPP:  " << endl;
 			for(aloc = alocacao.begin(),nesc=necessidade.begin(); aloc != alocacao.end()  && nesc != alocacao.end() ; aloc++,nesc++){	
-				//cout<<"FOR"<<endl;
 				if(aloc->first== Threads && nesc->first== Threads){				//descobrimos a coluna na matriz esta aquele ptem que alterar 
-					//ImprimeMapeamento(alocacao);
-					//ImprimeMapeamento(necessidade);
 					nesc->second[numeros[i]]++;
 					if(disponivel[numeros[i]]!= 0){
 						aloc->second[numeros[i]]++;
@@ -420,14 +407,22 @@ bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel){
 			//cout<< "entrei no VVVVVVVVVVVVVVV:  " << endl;	
 			for(aloc = alocacao.begin(),nesc=necessidade.begin(); aloc!= alocacao.end() && nesc!= alocacao.end() ; aloc++,nesc++){	
 				if(aloc->first == Threads ){				//descobrimos a coluna na matriz esta aquele ptem que alterar 
+					if(nesc->second[numeros[i]]>0){
+							nesc->second[numeros[i]]--;
+							aloc->second[numeros[i]]++;
+						
+						}
 					if(aloc->second[numeros[i]]==0){
 						//printf("não tem menoria para liberar"); 
-						disponivel[numeros[i]]++;	
+							
 						map<string, vector<int> > :: iterator auxiliar;
 						auxiliar = alocacao.begin();
 						while(1){
 							if (auxiliar->second[numeros[i]] > 0){
 								auxiliar->second[numeros[i]]--;
+								disponivel[numeros[i]]++;
+								if(nesc->second[numeros[1]] > 0)
+											
 								break;		
 							}
 							if(auxiliar == alocacao.end()){
@@ -443,10 +438,10 @@ bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel){
 				}
 	 		}
 		}
-		cout<< "necessidade" <<endl;	
-		ImprimeMapeamento(necessidade);
-		cout<< "alocacao" <<endl;
-		ImprimeMapeamento(alocacao);
+		//cout<< "necessidade" <<endl;	
+		//ImprimeMapeamento(necessidade);
+		//cout<< "alocacao" <<endl;
+		//ImprimeMapeamento(alocacao);
 
 		if (EncontraDeadlock(necessidade,alocacao, disponivel) == true){
 			cout << "dead lock"<< endl;
@@ -500,7 +495,7 @@ bool EncontraDeadlock (map<string, vector<int> > necessidade, map<string, vector
 		}
 		if(cont != aloc->second.size()){
 			termino[k] = false;
-			cout << "termino["<<k<<"]: "<< termino[k] << endl;		
+			//cout << "termino["<<k<<"]: "<< termino[k] << endl;		
 			}
 	k++;
 	}
@@ -511,9 +506,9 @@ bool EncontraDeadlock (map<string, vector<int> > necessidade, map<string, vector
 			for(int i = 0; i<j->second.size();i++){
 				if(j->second[i] <= disponivel[i]){
 					cont++;
-					cout << "cont:  " << cont << endl;
+					//cout << "cont:  " << cont << endl;
 				}
-			}	
+			}
 			if(cont == j->second.size()){
 				for(int l=0; l<termino.size(); l++){
 					disponivel[l] = disponivel[l] + aloc->second[l]; 	
