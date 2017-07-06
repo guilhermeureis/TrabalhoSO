@@ -1,0 +1,327 @@
+\hypertarget{trabalho_8cpp}{\section{trabalho.\+cpp File Reference}
+\label{trabalho_8cpp}\index{trabalho.\+cpp@{trabalho.\+cpp}}
+}
+
+
+Detecção de deadlock.  
+
+
+{\ttfamily \#include \char`\"{}header.\+h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{trabalho_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{main} ()
+\item 
+vector$<$ string $>$ \hyperlink{trabalho_8cpp_afd34298d733d42608ada05e62cbf8384}{Entrada\+Padrao} ()
+\item 
+vector$<$ int $>$ \hyperlink{trabalho_8cpp_adf7e9cfb6601e1c04d0d917f5c04a6a4}{Entrada\+Semaforo} ()
+\item 
+vector$<$ int $>$ \hyperlink{trabalho_8cpp_ae64440d07418855a8fe77254a3b428b1}{Contador\+Tabulacao} (vector$<$ string $>$ v)
+\item 
+\hyperlink{header_8h_a7add35317e384cd14231f428e57531ca}{Thread} \hyperlink{trabalho_8cpp_a8f6422997c7f7290c642ad8baefb1505}{Historico\+Threads} (vector$<$ string $>$ v, vector$<$ int $>$ \hyperlink{trabalho_8cpp_ae64440d07418855a8fe77254a3b428b1}{Contador\+Tabulacao}, vector$<$ int $>$ n)
+\item 
+vector$<$ int $>$ \hyperlink{trabalho_8cpp_a37072faead43c287d1dfc1350918eb1f}{Contar\+No} (vector$<$ string $>$ v, vector$<$ int $>$ tabulacao)
+\item 
+void \hyperlink{trabalho_8cpp_a39f9094eba457e1c020c68512f61e064}{caminhos\+Grafos} (\hyperlink{header_8h_a7add35317e384cd14231f428e57531ca}{Thread} grafo, vector$<$ int $>$ n)
+\item 
+void \hyperlink{trabalho_8cpp_ab130411179769e3d18450d421b429b7a}{salva\+Todos\+Caminhos} (int inicio, int fim, int n, map$<$ int, vector$<$ int $>$ $>$ g)
+\item 
+void \hyperlink{trabalho_8cpp_a0b5f51be8f2ef489f9b752831f3a68c3}{salva\+Todos\+Caminhos\+Encontrados} (int inicio, int fim, bool visitado\mbox{[}$\,$\mbox{]}, int caminho\mbox{[}$\,$\mbox{]}, int \&indice\+Caminho, map$<$ int, vector$<$ int $>$ $>$ g)
+\item 
+void \hyperlink{trabalho_8cpp_ab7d8092d256780fcfe7e7b8ae1fca4d0}{Inicializar\+Tuplas} ()
+\item 
+void \hyperlink{trabalho_8cpp_a2b9668c2ad22d1c14a66d1fec573c935}{Ordena\+Caminhos} (\hyperlink{header_8h_a7add35317e384cd14231f428e57531ca}{Thread} t, vector$<$ string $>$ v, vector$<$ int $>$ disponivel)
+\item 
+bool \hyperlink{trabalho_8cpp_a513862107c7ec00d9a414d08e75c35ec}{Algoritmo\+Banqueiro} (\hyperlink{header_8h_a7add35317e384cd14231f428e57531ca}{Thread} t, vector$<$ string $>$ v, vector$<$ int $>$ disponivel, vector$<$ int $>$ combinacoes)
+\item 
+string \hyperlink{trabalho_8cpp_a7f992ee0a1bd40ca1ab4accf3d534921}{busca\+Threads} (\hyperlink{header_8h_a7add35317e384cd14231f428e57531ca}{Thread} t, vector$<$ int $>$combinacoes, int l)
+\item 
+bool \hyperlink{trabalho_8cpp_a27d3358289ae2cda6b9a87dc53a90294}{Encontra\+Deadlock} (map$<$ string, vector$<$ int $>$ $>$ necessidade, map$<$ string, vector$<$ int $>$ $>$ alocacao, vector$<$ int $>$ disponivel)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+map$<$ string, vector$<$ int $>$ $>$ \hyperlink{trabalho_8cpp_a70122a35fca97a9d4b2b9b1c66a3b031}{map\+Todos\+Os\+Caminhos}
+\begin{DoxyCompactList}\small\item\em Variaveis Globais. \end{DoxyCompactList}\item 
+vector$<$ vector$<$ int $>$ $>$ \hyperlink{trabalho_8cpp_ad307a54fd7189925008bbb3ffd8c5cf8}{auxiliar\+Caminho}
+\item 
+string \hyperlink{trabalho_8cpp_a8456ac4e3705c520d33e8c7d69817db1}{aux\+Thread} = \char`\"{}\char`\"{}
+\item 
+vector$<$ int $>$ \hyperlink{trabalho_8cpp_a818d09a2e8240884dd9cbfa676eac069}{vetor\+Aux\+Caminho}
+\item 
+vector$<$ pair$<$ string, int $>$ $>$ \hyperlink{trabalho_8cpp_aef4cf5fe19d0c2d9a640a6f02e8fb751}{maiores\+Caminhos}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Detecção de deadlock. 
+
+\hypertarget{trabalho_8cpp_Introdução}{}\subsection{Introdução}\label{trabalho_8cpp_Introdução}
+Trabalho consiste e analisar uma sequência afim de verificar se um programa está suscetivel a deadlock monstrando a sequência que deu deadlock.
+
+\begin{DoxyAuthor}{Author}
+Filipe Nascimento Caniçali 
+
+Guilherme uliana dos Reis 
+\end{DoxyAuthor}
+
+
+\subsection{Function Documentation}
+\hypertarget{trabalho_8cpp_a513862107c7ec00d9a414d08e75c35ec}{\index{trabalho.\+cpp@{trabalho.\+cpp}!Algoritmo\+Banqueiro@{Algoritmo\+Banqueiro}}
+\index{Algoritmo\+Banqueiro@{Algoritmo\+Banqueiro}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{Algoritmo\+Banqueiro}]{\setlength{\rightskip}{0pt plus 5cm}bool Algoritmo\+Banqueiro (
+\begin{DoxyParamCaption}
+\item[{{\bf Thread}}]{t, }
+\item[{vector$<$ string $>$}]{v, }
+\item[{vector$<$ int $>$}]{disponivel, }
+\item[{vector$<$ int $>$}]{combinacoes}
+\end{DoxyParamCaption}
+)}}\label{trabalho_8cpp_a513862107c7ec00d9a414d08e75c35ec}
+Função que analisa os tipos de nós de cada Grafo e analisa se contém D\+E\+A\+D\+L\+O\+C\+K. 
+\begin{DoxyParams}{Parameters}
+{\em t} & é um argumento do tipo Thread. \\
+\hline
+{\em v} & é um argumento do tipo vector de string. \\
+\hline
+{\em disponivel} & é um argumento do tipo vector de inteiro. \\
+\hline
+{\em combinacoes} & é um argumento do tipo vector de inteiro. \\
+\hline
+\end{DoxyParams}
+Matriz de necessidade.
+
+Matriz de alocação.
+
+Inicialização das duas matrizes com zeros.
+
+Identificação dos tipos existentes em cada nó do grafo.
+
+Encontrando de qual thread é o \char`\"{}p\char`\"{} ou \char`\"{}v\char`\"{}
+
+Condição se for um \char`\"{}p\char`\"{}
+
+Condição se for um \char`\"{}v\char`\"{} \hypertarget{trabalho_8cpp_a7f992ee0a1bd40ca1ab4accf3d534921}{\index{trabalho.\+cpp@{trabalho.\+cpp}!busca\+Threads@{busca\+Threads}}
+\index{busca\+Threads@{busca\+Threads}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{busca\+Threads}]{\setlength{\rightskip}{0pt plus 5cm}string busca\+Threads (
+\begin{DoxyParamCaption}
+\item[{{\bf Thread}}]{t, }
+\item[{vector$<$ int $>$}]{combinacoes, }
+\item[{int}]{l}
+\end{DoxyParamCaption}
+)}}\label{trabalho_8cpp_a7f992ee0a1bd40ca1ab4accf3d534921}
+Função que busca a thread(grafo) que o nó pertence. 
+\begin{DoxyParams}{Parameters}
+{\em t} & é um argumento do tipo Thread. \\
+\hline
+{\em combinacoes} & é um argumento do tipo vector de inteiro. \\
+\hline
+{\em l} & é um argumento do tipo inteira \\
+\hline
+\end{DoxyParams}
+\hypertarget{trabalho_8cpp_a39f9094eba457e1c020c68512f61e064}{\index{trabalho.\+cpp@{trabalho.\+cpp}!caminhos\+Grafos@{caminhos\+Grafos}}
+\index{caminhos\+Grafos@{caminhos\+Grafos}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{caminhos\+Grafos}]{\setlength{\rightskip}{0pt plus 5cm}void caminhos\+Grafos (
+\begin{DoxyParamCaption}
+\item[{{\bf Thread}}]{grafo, }
+\item[{vector$<$ int $>$}]{n}
+\end{DoxyParamCaption}
+)}}\label{trabalho_8cpp_a39f9094eba457e1c020c68512f61e064}
+Liberando o espaço do vetor \char`\"{}vetor\+Aux\+Caminho\char`\"{}
+
+Liberando o espaço do vetor \char`\"{}vetor\+Aux\+Caminho\char`\"{} \hypertarget{trabalho_8cpp_ae64440d07418855a8fe77254a3b428b1}{\index{trabalho.\+cpp@{trabalho.\+cpp}!Contador\+Tabulacao@{Contador\+Tabulacao}}
+\index{Contador\+Tabulacao@{Contador\+Tabulacao}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{Contador\+Tabulacao}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$int$>$ Contador\+Tabulacao (
+\begin{DoxyParamCaption}
+\item[{vector$<$ string $>$}]{v}
+\end{DoxyParamCaption}
+)}}\label{trabalho_8cpp_ae64440d07418855a8fe77254a3b428b1}
+Função que faz a contagem das tabulações de todas as linhas da entrada e salva em um vetor de inteiros. 
+\begin{DoxyParams}{Parameters}
+{\em v} & é um vector de string. \\
+\hline
+\end{DoxyParams}
+\hypertarget{trabalho_8cpp_a37072faead43c287d1dfc1350918eb1f}{\index{trabalho.\+cpp@{trabalho.\+cpp}!Contar\+No@{Contar\+No}}
+\index{Contar\+No@{Contar\+No}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{Contar\+No}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$int$>$ Contar\+No (
+\begin{DoxyParamCaption}
+\item[{vector$<$ string $>$}]{v, }
+\item[{vector$<$ int $>$}]{tabulacao}
+\end{DoxyParamCaption}
+)}}\label{trabalho_8cpp_a37072faead43c287d1dfc1350918eb1f}
+Função que faz a contagem dos Nós existentes em cada grafo. 
+\begin{DoxyParams}{Parameters}
+{\em v} & é um argumento do tipo vector de string. \\
+\hline
+{\em tabulacao} & é um argumento do tipo vector de inteiro. \\
+\hline
+\end{DoxyParams}
+\hypertarget{trabalho_8cpp_a27d3358289ae2cda6b9a87dc53a90294}{\index{trabalho.\+cpp@{trabalho.\+cpp}!Encontra\+Deadlock@{Encontra\+Deadlock}}
+\index{Encontra\+Deadlock@{Encontra\+Deadlock}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{Encontra\+Deadlock}]{\setlength{\rightskip}{0pt plus 5cm}bool Encontra\+Deadlock (
+\begin{DoxyParamCaption}
+\item[{map$<$ string, vector$<$ int $>$ $>$}]{necessidade, }
+\item[{map$<$ string, vector$<$ int $>$ $>$}]{alocacao, }
+\item[{vector$<$ int $>$}]{disponivel}
+\end{DoxyParamCaption}
+)}}\label{trabalho_8cpp_a27d3358289ae2cda6b9a87dc53a90294}
+Função que encontra deadlock. 
+\begin{DoxyParams}{Parameters}
+{\em necessidade} & é um argumento de mapeamento. \\
+\hline
+{\em alocacao} & é um argumento de mapeamento. \\
+\hline
+{\em disponivel} & é um argumento do tipo vector de inteiro. \\
+\hline
+\end{DoxyParams}
+\hypertarget{trabalho_8cpp_afd34298d733d42608ada05e62cbf8384}{\index{trabalho.\+cpp@{trabalho.\+cpp}!Entrada\+Padrao@{Entrada\+Padrao}}
+\index{Entrada\+Padrao@{Entrada\+Padrao}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{Entrada\+Padrao}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$string$>$ Entrada\+Padrao (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{trabalho_8cpp_afd34298d733d42608ada05e62cbf8384}
+Função que captura a todas as demais linhas da entrada e salva em um vetor de string que representa todos os comandos da entrada. \hypertarget{trabalho_8cpp_adf7e9cfb6601e1c04d0d917f5c04a6a4}{\index{trabalho.\+cpp@{trabalho.\+cpp}!Entrada\+Semaforo@{Entrada\+Semaforo}}
+\index{Entrada\+Semaforo@{Entrada\+Semaforo}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{Entrada\+Semaforo}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$int$>$ Entrada\+Semaforo (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{trabalho_8cpp_adf7e9cfb6601e1c04d0d917f5c04a6a4}
+Função que captura a primeira linha da entrada e salva em um vetor de inteiros que representa a inicialização dos semáforos. \hypertarget{trabalho_8cpp_a8f6422997c7f7290c642ad8baefb1505}{\index{trabalho.\+cpp@{trabalho.\+cpp}!Historico\+Threads@{Historico\+Threads}}
+\index{Historico\+Threads@{Historico\+Threads}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{Historico\+Threads}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Thread} Historico\+Threads (
+\begin{DoxyParamCaption}
+\item[{vector$<$ string $>$}]{v, }
+\item[{vector$<$ int $>$}]{Contador\+Tabulacao, }
+\item[{vector$<$ int $>$}]{n}
+\end{DoxyParamCaption}
+)}}\label{trabalho_8cpp_a8f6422997c7f7290c642ad8baefb1505}
+Função que salva todos as informações em um grafo. 
+\begin{DoxyParams}{Parameters}
+{\em v} & é um argumento do tipo vector de string. \\
+\hline
+{\em Contador\+Tabulacao} & é um argumento do tipo vector de inteiro. \\
+\hline
+{\em n} & é um argumento do tipo vector de inteiro. \\
+\hline
+\end{DoxyParams}
+percorre até encontrar o último elemento so arquivo
+
+Verifica se esse f é da threads através de tabulação
+
+string aux recebe a linha do V\mbox{[}i\mbox{]} (f1, f2, f3, f4)
+
+Se é ultimo elemento do arquivo ou Se o proximo elemento e uma threads
+
+identifica se possui I\+F
+
+caso encontre o if, valor da posição será maior que -\/1
+
+determina se é um else e se é o else daquele if pela tabulação
+
+Se for último elemento da thread ou último elemento do arquivo
+
+proximo elemento é o else
+
+se for maior que -\/1 é o else \hypertarget{trabalho_8cpp_ab7d8092d256780fcfe7e7b8ae1fca4d0}{\index{trabalho.\+cpp@{trabalho.\+cpp}!Inicializar\+Tuplas@{Inicializar\+Tuplas}}
+\index{Inicializar\+Tuplas@{Inicializar\+Tuplas}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{Inicializar\+Tuplas}]{\setlength{\rightskip}{0pt plus 5cm}void Inicializar\+Tuplas (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{trabalho_8cpp_ab7d8092d256780fcfe7e7b8ae1fca4d0}
+Função que inicializa um vector de pair onde é salvado o caminho de cada thread. \hypertarget{trabalho_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}{\index{trabalho.\+cpp@{trabalho.\+cpp}!main@{main}}
+\index{main@{main}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{trabalho_8cpp_ae66f6b31b5ad750f1fe042a706a4e3d4}
+Função Principal do Programa \hypertarget{trabalho_8cpp_a2b9668c2ad22d1c14a66d1fec573c935}{\index{trabalho.\+cpp@{trabalho.\+cpp}!Ordena\+Caminhos@{Ordena\+Caminhos}}
+\index{Ordena\+Caminhos@{Ordena\+Caminhos}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{Ordena\+Caminhos}]{\setlength{\rightskip}{0pt plus 5cm}void Ordena\+Caminhos (
+\begin{DoxyParamCaption}
+\item[{{\bf Thread}}]{t, }
+\item[{vector$<$ string $>$}]{v, }
+\item[{vector$<$ int $>$}]{disponivel}
+\end{DoxyParamCaption}
+)}}\label{trabalho_8cpp_a2b9668c2ad22d1c14a66d1fec573c935}
+Função que simula a região crítica ordenando todos os caminhos possíveis. 
+\begin{DoxyParams}{Parameters}
+{\em t} & é um argumento do tipo Thread. \\
+\hline
+{\em v} & é um argumento do tipo vector de string. \\
+\hline
+{\em disponivel} & é um argumento do tipo vector de inteiro. \\
+\hline
+\end{DoxyParams}
+Faz a permutação de todas as sequências das possíveis combinações de caminho. Simulação da região crítica. \hypertarget{trabalho_8cpp_ab130411179769e3d18450d421b429b7a}{\index{trabalho.\+cpp@{trabalho.\+cpp}!salva\+Todos\+Caminhos@{salva\+Todos\+Caminhos}}
+\index{salva\+Todos\+Caminhos@{salva\+Todos\+Caminhos}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{salva\+Todos\+Caminhos}]{\setlength{\rightskip}{0pt plus 5cm}void salva\+Todos\+Caminhos (
+\begin{DoxyParamCaption}
+\item[{int}]{inicio, }
+\item[{int}]{fim, }
+\item[{int}]{n, }
+\item[{map$<$ int, vector$<$ int $>$ $>$}]{g}
+\end{DoxyParamCaption}
+)}}\label{trabalho_8cpp_ab130411179769e3d18450d421b429b7a}
+Função que faz a chamada da função de recursão e inicializa as variáveis. 
+\begin{DoxyParams}{Parameters}
+{\em inicio} & é um argumento inteiro. \\
+\hline
+{\em fim} & é um argumento inteiro. \\
+\hline
+{\em n} & é um argumento inteiro. \\
+\hline
+{\em g} & é um argumento de mapeamento. \\
+\hline
+\end{DoxyParams}
+Vetor de vertices não visitados
+
+Vetor que armazena os caminhos \hypertarget{trabalho_8cpp_a0b5f51be8f2ef489f9b752831f3a68c3}{\index{trabalho.\+cpp@{trabalho.\+cpp}!salva\+Todos\+Caminhos\+Encontrados@{salva\+Todos\+Caminhos\+Encontrados}}
+\index{salva\+Todos\+Caminhos\+Encontrados@{salva\+Todos\+Caminhos\+Encontrados}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{salva\+Todos\+Caminhos\+Encontrados}]{\setlength{\rightskip}{0pt plus 5cm}void salva\+Todos\+Caminhos\+Encontrados (
+\begin{DoxyParamCaption}
+\item[{int}]{inicio, }
+\item[{int}]{fim, }
+\item[{bool}]{visitado\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{caminho\mbox{[}$\,$\mbox{]}, }
+\item[{int \&}]{indice\+Caminho, }
+\item[{map$<$ int, vector$<$ int $>$ $>$}]{g}
+\end{DoxyParamCaption}
+)}}\label{trabalho_8cpp_a0b5f51be8f2ef489f9b752831f3a68c3}
+Função recursiva que salva todos os maiores caminhos. 
+\begin{DoxyParams}{Parameters}
+{\em inicio} & é um argumento inteiro. \\
+\hline
+{\em fim} & é um argumento inteiro. \\
+\hline
+{\em visitado\mbox{[}$\,$\mbox{]}} & é um argumento do tipo vetor boolean. \\
+\hline
+{\em indice\+Caminho} & é um argumento de endereço inteiro. \\
+\hline
+{\em g} & é um argumento de mapeamento. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Variable Documentation}
+\hypertarget{trabalho_8cpp_ad307a54fd7189925008bbb3ffd8c5cf8}{\index{trabalho.\+cpp@{trabalho.\+cpp}!auxiliar\+Caminho@{auxiliar\+Caminho}}
+\index{auxiliar\+Caminho@{auxiliar\+Caminho}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{auxiliar\+Caminho}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$vector$<$int$>$ $>$ auxiliar\+Caminho}}\label{trabalho_8cpp_ad307a54fd7189925008bbb3ffd8c5cf8}
+\hypertarget{trabalho_8cpp_a8456ac4e3705c520d33e8c7d69817db1}{\index{trabalho.\+cpp@{trabalho.\+cpp}!aux\+Thread@{aux\+Thread}}
+\index{aux\+Thread@{aux\+Thread}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{aux\+Thread}]{\setlength{\rightskip}{0pt plus 5cm}string aux\+Thread = \char`\"{}\char`\"{}}}\label{trabalho_8cpp_a8456ac4e3705c520d33e8c7d69817db1}
+\hypertarget{trabalho_8cpp_aef4cf5fe19d0c2d9a640a6f02e8fb751}{\index{trabalho.\+cpp@{trabalho.\+cpp}!maiores\+Caminhos@{maiores\+Caminhos}}
+\index{maiores\+Caminhos@{maiores\+Caminhos}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{maiores\+Caminhos}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$pair$<$string,int$>$ $>$ maiores\+Caminhos}}\label{trabalho_8cpp_aef4cf5fe19d0c2d9a640a6f02e8fb751}
+\hypertarget{trabalho_8cpp_a70122a35fca97a9d4b2b9b1c66a3b031}{\index{trabalho.\+cpp@{trabalho.\+cpp}!map\+Todos\+Os\+Caminhos@{map\+Todos\+Os\+Caminhos}}
+\index{map\+Todos\+Os\+Caminhos@{map\+Todos\+Os\+Caminhos}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{map\+Todos\+Os\+Caminhos}]{\setlength{\rightskip}{0pt plus 5cm}map$<$string,vector$<$int$>$ $>$ map\+Todos\+Os\+Caminhos}}\label{trabalho_8cpp_a70122a35fca97a9d4b2b9b1c66a3b031}
+
+
+Variaveis Globais. 
+
+\hypertarget{trabalho_8cpp_a818d09a2e8240884dd9cbfa676eac069}{\index{trabalho.\+cpp@{trabalho.\+cpp}!vetor\+Aux\+Caminho@{vetor\+Aux\+Caminho}}
+\index{vetor\+Aux\+Caminho@{vetor\+Aux\+Caminho}!trabalho.\+cpp@{trabalho.\+cpp}}
+\subsubsection[{vetor\+Aux\+Caminho}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$int$>$ vetor\+Aux\+Caminho}}\label{trabalho_8cpp_a818d09a2e8240884dd9cbfa676eac069}

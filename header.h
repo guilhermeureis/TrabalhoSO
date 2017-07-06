@@ -1,6 +1,6 @@
 /**
 *	@file header.h 
-*	@brief Arquivo que contem as assinaturas das funçoes utilizadas no trabalho
+*	@brief biblioteca que contem, bibliotecas padrão e as assinaturas das funçoes utilizadas no trabalho
 *
 *
 *	@author Filipe Nascimento Caniçali

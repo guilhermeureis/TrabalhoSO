@@ -1,0 +1,297 @@
+\hypertarget{header_8h}{\section{header.\+h File Reference}
+\label{header_8h}\index{header.\+h@{header.\+h}}
+}
+
+
+biblioteca que contem, bibliotecas padrão e as assinaturas das funçoes utilizadas no trabalho  
+
+
+{\ttfamily \#include $<$bits/stdc++.\+h$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$iostream$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+{\ttfamily \#include $<$sstream$>$}\\*
+{\ttfamily \#include $<$map$>$}\\*
+{\ttfamily \#include $<$utility$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{header_8h_a7add35317e384cd14231f428e57531ca}{Thread}~map $<$ string, map $<$ int, vector $<$ int $>$ $>$ $>$
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+vector$<$ string $>$ \hyperlink{header_8h_afd34298d733d42608ada05e62cbf8384}{Entrada\+Padrao} ()
+\item 
+vector$<$ int $>$ \hyperlink{header_8h_adf7e9cfb6601e1c04d0d917f5c04a6a4}{Entrada\+Semaforo} ()
+\item 
+vector$<$ int $>$ \hyperlink{header_8h_ae64440d07418855a8fe77254a3b428b1}{Contador\+Tabulacao} (vector$<$ string $>$ v)
+\item 
+\hyperlink{header_8h_a7add35317e384cd14231f428e57531ca}{Thread} \hyperlink{header_8h_a8f6422997c7f7290c642ad8baefb1505}{Historico\+Threads} (vector$<$ string $>$ v, vector$<$ int $>$ \hyperlink{trabalho_8cpp_ae64440d07418855a8fe77254a3b428b1}{Contador\+Tabulacao}, vector$<$ int $>$ n)
+\item 
+vector$<$ int $>$ \hyperlink{header_8h_a37072faead43c287d1dfc1350918eb1f}{Contar\+No} (vector$<$ string $>$ v, vector$<$ int $>$ tabulacao)
+\item 
+void \hyperlink{header_8h_a39f9094eba457e1c020c68512f61e064}{caminhos\+Grafos} (\hyperlink{header_8h_a7add35317e384cd14231f428e57531ca}{Thread} grafo, vector$<$ int $>$ n)
+\item 
+void \hyperlink{header_8h_a0b5f51be8f2ef489f9b752831f3a68c3}{salva\+Todos\+Caminhos\+Encontrados} (int inicio, int fim, bool visitado\mbox{[}$\,$\mbox{]}, int caminho\mbox{[}$\,$\mbox{]}, int \&indice\+Caminho, map$<$ int, vector$<$ int $>$ $>$ g)
+\item 
+void \hyperlink{header_8h_ab130411179769e3d18450d421b429b7a}{salva\+Todos\+Caminhos} (int inicio, int fim, int n, map$<$ int, vector$<$ int $>$ $>$ g)
+\item 
+bool \hyperlink{header_8h_a513862107c7ec00d9a414d08e75c35ec}{Algoritmo\+Banqueiro} (\hyperlink{header_8h_a7add35317e384cd14231f428e57531ca}{Thread} t, vector$<$ string $>$ v, vector$<$ int $>$ disponivel, vector$<$ int $>$ combinacoes)
+\item 
+string \hyperlink{header_8h_a7f992ee0a1bd40ca1ab4accf3d534921}{busca\+Threads} (\hyperlink{header_8h_a7add35317e384cd14231f428e57531ca}{Thread} t, vector$<$ int $>$combinacoes, int l)
+\item 
+void \hyperlink{header_8h_ab7d8092d256780fcfe7e7b8ae1fca4d0}{Inicializar\+Tuplas} ()
+\item 
+void \hyperlink{header_8h_a2b9668c2ad22d1c14a66d1fec573c935}{Ordena\+Caminhos} (\hyperlink{header_8h_a7add35317e384cd14231f428e57531ca}{Thread} t, vector$<$ string $>$ v, vector$<$ int $>$ disponivel)
+\item 
+bool \hyperlink{header_8h_a27d3358289ae2cda6b9a87dc53a90294}{Encontra\+Deadlock} (map$<$ string, vector$<$ int $>$ $>$ necessidade, map$<$ string, vector$<$ int $>$ $>$ alocacao, vector$<$ int $>$ disponivel)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+biblioteca que contem, bibliotecas padrão e as assinaturas das funçoes utilizadas no trabalho 
+
+\begin{DoxyAuthor}{Author}
+Filipe Nascimento Caniçali 
+
+Guilherme uliana dos Reis 
+\end{DoxyAuthor}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{header_8h_a7add35317e384cd14231f428e57531ca}{\index{header.\+h@{header.\+h}!Thread@{Thread}}
+\index{Thread@{Thread}!header.\+h@{header.\+h}}
+\subsubsection[{Thread}]{\setlength{\rightskip}{0pt plus 5cm}\#define Thread~map $<$ string, map $<$ int, vector $<$ int $>$ $>$ $>$}}\label{header_8h_a7add35317e384cd14231f428e57531ca}
+
+
+\subsection{Function Documentation}
+\hypertarget{header_8h_a513862107c7ec00d9a414d08e75c35ec}{\index{header.\+h@{header.\+h}!Algoritmo\+Banqueiro@{Algoritmo\+Banqueiro}}
+\index{Algoritmo\+Banqueiro@{Algoritmo\+Banqueiro}!header.\+h@{header.\+h}}
+\subsubsection[{Algoritmo\+Banqueiro}]{\setlength{\rightskip}{0pt plus 5cm}bool Algoritmo\+Banqueiro (
+\begin{DoxyParamCaption}
+\item[{{\bf Thread}}]{t, }
+\item[{vector$<$ string $>$}]{v, }
+\item[{vector$<$ int $>$}]{disponivel, }
+\item[{vector$<$ int $>$}]{combinacoes}
+\end{DoxyParamCaption}
+)}}\label{header_8h_a513862107c7ec00d9a414d08e75c35ec}
+Função que analisa os tipos de nós de cada Grafo e analisa se contém D\+E\+A\+D\+L\+O\+C\+K. 
+\begin{DoxyParams}{Parameters}
+{\em t} & é um argumento do tipo Thread. \\
+\hline
+{\em v} & é um argumento do tipo vector de string. \\
+\hline
+{\em disponivel} & é um argumento do tipo vector de inteiro. \\
+\hline
+{\em combinacoes} & é um argumento do tipo vector de inteiro. \\
+\hline
+\end{DoxyParams}
+Matriz de necessidade.
+
+Matriz de alocação.
+
+Inicialização das duas matrizes com zeros.
+
+Identificação dos tipos existentes em cada nó do grafo.
+
+Encontrando de qual thread é o \char`\"{}p\char`\"{} ou \char`\"{}v\char`\"{}
+
+Condição se for um \char`\"{}p\char`\"{}
+
+Condição se for um \char`\"{}v\char`\"{} \hypertarget{header_8h_a7f992ee0a1bd40ca1ab4accf3d534921}{\index{header.\+h@{header.\+h}!busca\+Threads@{busca\+Threads}}
+\index{busca\+Threads@{busca\+Threads}!header.\+h@{header.\+h}}
+\subsubsection[{busca\+Threads}]{\setlength{\rightskip}{0pt plus 5cm}string busca\+Threads (
+\begin{DoxyParamCaption}
+\item[{{\bf Thread}}]{t, }
+\item[{vector$<$ int $>$}]{combinacoes, }
+\item[{int}]{l}
+\end{DoxyParamCaption}
+)}}\label{header_8h_a7f992ee0a1bd40ca1ab4accf3d534921}
+Função que busca a thread(grafo) que o nó pertence. 
+\begin{DoxyParams}{Parameters}
+{\em t} & é um argumento do tipo Thread. \\
+\hline
+{\em combinacoes} & é um argumento do tipo vector de inteiro. \\
+\hline
+{\em l} & é um argumento do tipo inteira \\
+\hline
+\end{DoxyParams}
+\hypertarget{header_8h_a39f9094eba457e1c020c68512f61e064}{\index{header.\+h@{header.\+h}!caminhos\+Grafos@{caminhos\+Grafos}}
+\index{caminhos\+Grafos@{caminhos\+Grafos}!header.\+h@{header.\+h}}
+\subsubsection[{caminhos\+Grafos}]{\setlength{\rightskip}{0pt plus 5cm}void caminhos\+Grafos (
+\begin{DoxyParamCaption}
+\item[{{\bf Thread}}]{grafo, }
+\item[{vector$<$ int $>$}]{n}
+\end{DoxyParamCaption}
+)}}\label{header_8h_a39f9094eba457e1c020c68512f61e064}
+Liberando o espaço do vetor \char`\"{}vetor\+Aux\+Caminho\char`\"{}
+
+Liberando o espaço do vetor \char`\"{}vetor\+Aux\+Caminho\char`\"{} \hypertarget{header_8h_ae64440d07418855a8fe77254a3b428b1}{\index{header.\+h@{header.\+h}!Contador\+Tabulacao@{Contador\+Tabulacao}}
+\index{Contador\+Tabulacao@{Contador\+Tabulacao}!header.\+h@{header.\+h}}
+\subsubsection[{Contador\+Tabulacao}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$int$>$ Contador\+Tabulacao (
+\begin{DoxyParamCaption}
+\item[{vector$<$ string $>$}]{v}
+\end{DoxyParamCaption}
+)}}\label{header_8h_ae64440d07418855a8fe77254a3b428b1}
+Função que faz a contagem das tabulações de todas as linhas da entrada e salva em um vetor de inteiros. 
+\begin{DoxyParams}{Parameters}
+{\em v} & é um vector de string. \\
+\hline
+\end{DoxyParams}
+\hypertarget{header_8h_a37072faead43c287d1dfc1350918eb1f}{\index{header.\+h@{header.\+h}!Contar\+No@{Contar\+No}}
+\index{Contar\+No@{Contar\+No}!header.\+h@{header.\+h}}
+\subsubsection[{Contar\+No}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$int$>$ Contar\+No (
+\begin{DoxyParamCaption}
+\item[{vector$<$ string $>$}]{v, }
+\item[{vector$<$ int $>$}]{tabulacao}
+\end{DoxyParamCaption}
+)}}\label{header_8h_a37072faead43c287d1dfc1350918eb1f}
+Função que faz a contagem dos Nós existentes em cada grafo. 
+\begin{DoxyParams}{Parameters}
+{\em v} & é um argumento do tipo vector de string. \\
+\hline
+{\em tabulacao} & é um argumento do tipo vector de inteiro. \\
+\hline
+\end{DoxyParams}
+\hypertarget{header_8h_a27d3358289ae2cda6b9a87dc53a90294}{\index{header.\+h@{header.\+h}!Encontra\+Deadlock@{Encontra\+Deadlock}}
+\index{Encontra\+Deadlock@{Encontra\+Deadlock}!header.\+h@{header.\+h}}
+\subsubsection[{Encontra\+Deadlock}]{\setlength{\rightskip}{0pt plus 5cm}bool Encontra\+Deadlock (
+\begin{DoxyParamCaption}
+\item[{map$<$ string, vector$<$ int $>$ $>$}]{necessidade, }
+\item[{map$<$ string, vector$<$ int $>$ $>$}]{alocacao, }
+\item[{vector$<$ int $>$}]{disponivel}
+\end{DoxyParamCaption}
+)}}\label{header_8h_a27d3358289ae2cda6b9a87dc53a90294}
+Função que encontra deadlock. 
+\begin{DoxyParams}{Parameters}
+{\em necessidade} & é um argumento de mapeamento. \\
+\hline
+{\em alocacao} & é um argumento de mapeamento. \\
+\hline
+{\em disponivel} & é um argumento do tipo vector de inteiro. \\
+\hline
+\end{DoxyParams}
+\hypertarget{header_8h_afd34298d733d42608ada05e62cbf8384}{\index{header.\+h@{header.\+h}!Entrada\+Padrao@{Entrada\+Padrao}}
+\index{Entrada\+Padrao@{Entrada\+Padrao}!header.\+h@{header.\+h}}
+\subsubsection[{Entrada\+Padrao}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$string$>$ Entrada\+Padrao (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{header_8h_afd34298d733d42608ada05e62cbf8384}
+Função que captura a todas as demais linhas da entrada e salva em um vetor de string que representa todos os comandos da entrada. \hypertarget{header_8h_adf7e9cfb6601e1c04d0d917f5c04a6a4}{\index{header.\+h@{header.\+h}!Entrada\+Semaforo@{Entrada\+Semaforo}}
+\index{Entrada\+Semaforo@{Entrada\+Semaforo}!header.\+h@{header.\+h}}
+\subsubsection[{Entrada\+Semaforo}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$int$>$ Entrada\+Semaforo (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{header_8h_adf7e9cfb6601e1c04d0d917f5c04a6a4}
+Função que captura a primeira linha da entrada e salva em um vetor de inteiros que representa a inicialização dos semáforos. \hypertarget{header_8h_a8f6422997c7f7290c642ad8baefb1505}{\index{header.\+h@{header.\+h}!Historico\+Threads@{Historico\+Threads}}
+\index{Historico\+Threads@{Historico\+Threads}!header.\+h@{header.\+h}}
+\subsubsection[{Historico\+Threads}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Thread} Historico\+Threads (
+\begin{DoxyParamCaption}
+\item[{vector$<$ string $>$}]{v, }
+\item[{vector$<$ int $>$}]{Contador\+Tabulacao, }
+\item[{vector$<$ int $>$}]{n}
+\end{DoxyParamCaption}
+)}}\label{header_8h_a8f6422997c7f7290c642ad8baefb1505}
+Função que salva todos as informações em um grafo. 
+\begin{DoxyParams}{Parameters}
+{\em v} & é um argumento do tipo vector de string. \\
+\hline
+{\em Contador\+Tabulacao} & é um argumento do tipo vector de inteiro. \\
+\hline
+{\em n} & é um argumento do tipo vector de inteiro. \\
+\hline
+\end{DoxyParams}
+percorre até encontrar o último elemento so arquivo
+
+Verifica se esse f é da threads através de tabulação
+
+string aux recebe a linha do V\mbox{[}i\mbox{]} (f1, f2, f3, f4)
+
+Se é ultimo elemento do arquivo ou Se o proximo elemento e uma threads
+
+identifica se possui I\+F
+
+caso encontre o if, valor da posição será maior que -\/1
+
+determina se é um else e se é o else daquele if pela tabulação
+
+Se for último elemento da thread ou último elemento do arquivo
+
+proximo elemento é o else
+
+se for maior que -\/1 é o else \hypertarget{header_8h_ab7d8092d256780fcfe7e7b8ae1fca4d0}{\index{header.\+h@{header.\+h}!Inicializar\+Tuplas@{Inicializar\+Tuplas}}
+\index{Inicializar\+Tuplas@{Inicializar\+Tuplas}!header.\+h@{header.\+h}}
+\subsubsection[{Inicializar\+Tuplas}]{\setlength{\rightskip}{0pt plus 5cm}void Inicializar\+Tuplas (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{header_8h_ab7d8092d256780fcfe7e7b8ae1fca4d0}
+Função que inicializa um vector de pair onde é salvado o caminho de cada thread. \hypertarget{header_8h_a2b9668c2ad22d1c14a66d1fec573c935}{\index{header.\+h@{header.\+h}!Ordena\+Caminhos@{Ordena\+Caminhos}}
+\index{Ordena\+Caminhos@{Ordena\+Caminhos}!header.\+h@{header.\+h}}
+\subsubsection[{Ordena\+Caminhos}]{\setlength{\rightskip}{0pt plus 5cm}void Ordena\+Caminhos (
+\begin{DoxyParamCaption}
+\item[{{\bf Thread}}]{t, }
+\item[{vector$<$ string $>$}]{v, }
+\item[{vector$<$ int $>$}]{disponivel}
+\end{DoxyParamCaption}
+)}}\label{header_8h_a2b9668c2ad22d1c14a66d1fec573c935}
+Função que simula a região crítica ordenando todos os caminhos possíveis. 
+\begin{DoxyParams}{Parameters}
+{\em t} & é um argumento do tipo Thread. \\
+\hline
+{\em v} & é um argumento do tipo vector de string. \\
+\hline
+{\em disponivel} & é um argumento do tipo vector de inteiro. \\
+\hline
+\end{DoxyParams}
+Faz a permutação de todas as sequências das possíveis combinações de caminho. Simulação da região crítica. \hypertarget{header_8h_ab130411179769e3d18450d421b429b7a}{\index{header.\+h@{header.\+h}!salva\+Todos\+Caminhos@{salva\+Todos\+Caminhos}}
+\index{salva\+Todos\+Caminhos@{salva\+Todos\+Caminhos}!header.\+h@{header.\+h}}
+\subsubsection[{salva\+Todos\+Caminhos}]{\setlength{\rightskip}{0pt plus 5cm}void salva\+Todos\+Caminhos (
+\begin{DoxyParamCaption}
+\item[{int}]{inicio, }
+\item[{int}]{fim, }
+\item[{int}]{n, }
+\item[{map$<$ int, vector$<$ int $>$ $>$}]{g}
+\end{DoxyParamCaption}
+)}}\label{header_8h_ab130411179769e3d18450d421b429b7a}
+Função que faz a chamada da função de recursão e inicializa as variáveis. 
+\begin{DoxyParams}{Parameters}
+{\em inicio} & é um argumento inteiro. \\
+\hline
+{\em fim} & é um argumento inteiro. \\
+\hline
+{\em n} & é um argumento inteiro. \\
+\hline
+{\em g} & é um argumento de mapeamento. \\
+\hline
+\end{DoxyParams}
+Vetor de vertices não visitados
+
+Vetor que armazena os caminhos \hypertarget{header_8h_a0b5f51be8f2ef489f9b752831f3a68c3}{\index{header.\+h@{header.\+h}!salva\+Todos\+Caminhos\+Encontrados@{salva\+Todos\+Caminhos\+Encontrados}}
+\index{salva\+Todos\+Caminhos\+Encontrados@{salva\+Todos\+Caminhos\+Encontrados}!header.\+h@{header.\+h}}
+\subsubsection[{salva\+Todos\+Caminhos\+Encontrados}]{\setlength{\rightskip}{0pt plus 5cm}void salva\+Todos\+Caminhos\+Encontrados (
+\begin{DoxyParamCaption}
+\item[{int}]{inicio, }
+\item[{int}]{fim, }
+\item[{bool}]{visitado\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{caminho\mbox{[}$\,$\mbox{]}, }
+\item[{int \&}]{indice\+Caminho, }
+\item[{map$<$ int, vector$<$ int $>$ $>$}]{g}
+\end{DoxyParamCaption}
+)}}\label{header_8h_a0b5f51be8f2ef489f9b752831f3a68c3}
+Função recursiva que salva todos os maiores caminhos. 
+\begin{DoxyParams}{Parameters}
+{\em inicio} & é um argumento inteiro. \\
+\hline
+{\em fim} & é um argumento inteiro. \\
+\hline
+{\em visitado\mbox{[}$\,$\mbox{]}} & é um argumento do tipo vetor boolean. \\
+\hline
+{\em indice\+Caminho} & é um argumento de endereço inteiro. \\
+\hline
+{\em g} & é um argumento de mapeamento. \\
+\hline
+\end{DoxyParams}

@@ -1,6 +1,11 @@
 /**
 *	@file trabalho.cpp 
-*	@brief Determina se uma sequencia de passo está em deadlock.
+*	@brief Detecção de deadlock.
+*
+*	@section Introdução
+*
+*	Trabalho consiste e analisar uma sequência afim de verificar se um programa está suscetivel a deadlock
+	monstrando a sequência que deu deadlock.	
 *
 *	@author Filipe Nascimento Caniçali
 *	@author Guilherme uliana dos Reis 
