@@ -1,66 +1,16 @@
 #include "header.h"
 
-// Variaveis Globais para salvar todos os caminhos possiveis
+///Variaveis Globais
 map<string,vector<int> > mapTodosOsCaminhos;
 vector<vector<int> > auxiliarCaminho;
 string auxThread = "";
 vector<int> vetorAuxCaminho;
 vector<pair<string,int> > maioresCaminhos;
 
-void ImprimeVetor(vector<string> v){
-	for (int i = 0; i < v.size(); ++i){
-		cout<<v[i]<<endl;
-	}
-}
-void ImprimeVetor(vector<int> v){
-	for (int i = 0; i < v.size(); ++i){
-		cout<<v[i]<<" ";
-	}
-	cout<<endl;
-}
-void ImprimeMapeamento( map<string, vector<int> > mapCaminhos){
-	map<string,vector<int> > :: iterator i;
-	for (i = mapCaminhos.begin(); i != mapCaminhos.end(); ++i){
-		cout<<i->first<<": ";
-		for (int j = 0; j!= i->second.size(); ++j){
-			cout<<i->second[j]<<" ";
-		}
-		cout<<endl;
-	}
-}
-void ImprimeMapeamento(){
-	map<string,vector<int> > :: iterator i;
-	for (i = mapTodosOsCaminhos.begin(); i != mapTodosOsCaminhos.end(); ++i){
-		cout<<i->first<<": ";
-		for (int j = 0; j!= i->second.size(); ++j){
-			cout<<i->second[j]<<" ";
-		}
-		cout<<endl;
-	}
-}
-void ImprimeGrafo(Thread t){
-	
-	Thread :: iterator i;
-	map<int, vector<int> > :: iterator j;
-
-	for (i = t.begin(); i != t.end(); ++i){
-		for (j = i->second.begin(); j != i->second.end(); ++j){
-			for (int k = 0; k < j->second.size(); ++k){
-				cout<<i->first<<" "<<j->first<<" "<<j->second[k]<<endl;
-			}
-			
-		}
-	}
-}
-void ImprimeTuplas(){
-	vector<pair<string,int> > :: iterator i;
-
-	for (i = maioresCaminhos.begin(); i != maioresCaminhos.end(); ++i){
-		cout<<(*i).first<<" "<<(*i).second<<" ";
-	}
-	cout<<endl;	
-}
-
+/** 
+* Função Principal do Programa
+*
+*/
 int main(){
 	Thread threads;
 	vector<string> vetorPrincipal;
@@ -72,22 +22,17 @@ int main(){
 	vetorContadorTabulacao = ContadorTabulacao(vetorPrincipal);
 	vetorQtdeDeNo = ContarNo(vetorPrincipal,vetorContadorTabulacao);
 	threads = HistoricoThreads(vetorPrincipal,vetorContadorTabulacao,vetorQtdeDeNo);
-	//ImprimeVetor(vetorContadorTabulacao);
-	//ImprimeVetor(vetorQtdeDeNo);
-	//ImprimeGrafo(threads);
-	//ImprimeVetor(vetorQtdeDeNo);
-	//ImprimeVetor(vetorPrincipal);	
-	//ImprimeVetor(vetorSemaforo);
 	caminhosGrafos(threads,vetorQtdeDeNo);
-	//cout<<endl;
-	//ImprimeMapeamento();
 	InicializarTuplas();
-	//ImprimeTuplas();
 	OrdenaCaminhos(threads,vetorPrincipal,vetorSemaforo);
 	
 	return 0;
 }
 
+/** 
+* Função que captura a todas as demais linhas da entrada e salva em um vetor de string que representa
+* todos os comandos da entrada.
+*/
 vector<string> EntradaPadrao(){
 	
 	stringstream buffer;
@@ -110,6 +55,10 @@ vector<string> EntradaPadrao(){
 	v.push_back("Final");
 	return v;
 }
+/** 
+* Função que captura a primeira linha da entrada e salva em um vetor de inteiros que representa
+* a inicialização dos semáforos.
+*/
 vector<int> EntradaSemaforo(){
 	
 	stringstream buffer;
@@ -129,6 +78,10 @@ vector<int> EntradaSemaforo(){
 	}
 	return v;
 }
+/** 
+* Função que faz a contagem das tabulações de todas as linhas da entrada e salva em um vetor de inteiros.
+* @param v é um vector de string.
+*/
 vector<int> ContadorTabulacao(vector<string> v){
 	int cont;
 	vector<int> contador;
@@ -144,6 +97,12 @@ vector<int> ContadorTabulacao(vector<string> v){
 	}
 	return contador;
 }
+/** 
+* Função que salva todos as informações em um grafo.
+* @param v é um argumento do tipo vector de string.
+* @param ContadorTabulacao é um argumento do tipo vector de inteiro.
+* @param n é um argumento do tipo vector de inteiro.
+*/
 Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao, vector<int> n){
 	
 	string aux;
@@ -155,29 +114,30 @@ Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao, vector<
 	int ultimaPosicao = v.size();
 	
 
-	for (int i = 0; i < v.size(); i++){ 	//percorre ate encontar o ultimo elemento so arquivo
-		if(ContadorTabulacao[i] == 0){ 		// Verifica se esse f e da threads atravez de tabulação 
+	for (int i = 0; i < v.size(); i++){ 	///percorre até encontrar o último elemento so arquivo
+		if(ContadorTabulacao[i] == 0){ 		/// Verifica se esse f é da threads através de tabulação 
 			aux = v[i];
 			if(aux.find("Final")>0)
 				contadorNo++;
-		}							//string aux recebe a linha do V[i] (f1, f2, f3, f4)
+		}							///string aux recebe a linha do V[i] (f1, f2, f3, f4)
 		else{
-			if (i==(v.size()-1) || ContadorTabulacao[i+1] == 0){  			// Se é ultimo elemento do arquivo ou Se o proximo elemento e uma threads
+			if (i==(v.size()-1) || ContadorTabulacao[i+1] == 0){  /// Se é ultimo elemento do arquivo ou Se o proximo elemento e uma threads
 				flagUltimoElementoThread = 1;//
-				grafo[aux][i].push_back(n[contadorNo]);//grafo aponta para -1;	
+				grafo[aux][i].push_back(n[contadorNo]);	
 			}
 			else{
-				int posicaoIF = v[i].find("if"); //identifica que se possui IF 
-				if(posicaoIF > -1){              //caso encontre o if, valor da posição sera maior que -1
-					int k=i;
-					//cout<<k<<endl;						// cria uma variavel contador para percorrer ate o final do IF	
+				int posicaoIF = v[i].find("if"); ///identifica se possui IF 
+				if(posicaoIF > -1){              ///caso encontre o if, valor da posição será maior que -1
+					int k=i;	
 					do{			
-						k++;										
-						if((ContadorTabulacao[i]==ContadorTabulacao[k])||(ContadorTabulacao[k]==0)) { //determina se e um else e se e o else daquele if pela tabulação 
+						k++;
+						///determina se é um else e se é o else daquele if pela tabulação										
+						if((ContadorTabulacao[i]==ContadorTabulacao[k])||(ContadorTabulacao[k]==0)) {  
  							grafo[aux][i].push_back(k);
 							break;
 						}
-						if(k==(v.size()-1) || flagUltimoElementoThread == 1){  //Se for ultimo elemento ou ultimo elemento do arquivo
+						///Se for último elemento da thread ou último elemento do arquivo
+						if(k==(v.size()-1) || flagUltimoElementoThread == 1){  
 							grafo[aux][i].push_back(n[contadorNo]);
 							flagUltimoElementoThread = 0;
 							break;				
@@ -186,8 +146,8 @@ Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao, vector<
 
 					}while(1);
 				}
-				posicaoELSE = v[i+1].find("else"); //proximo elemento e o else 
-				if (posicaoELSE > -1){				// se for mais -1 e o else 
+				posicaoELSE = v[i+1].find("else"); ///proximo elemento é o else 
+				if (posicaoELSE > -1){				/// se for maior que -1 é o else 
 					int j = i+1;
 					do{
 						j++;
@@ -213,6 +173,11 @@ Thread HistoricoThreads(vector<string> v, vector<int> ContadorTabulacao, vector<
 	}	
 	return grafo;
 }
+/** 
+* Função que faz a contagem dos Nós existentes em cada grafo.
+* @param v é um argumento do tipo vector de string.
+* @param tabulacao é um argumento do tipo vector de inteiro.
+*/
 vector<int> ContarNo(vector<string> v, vector<int> tabulacao){
 	vector<int> vetorQuantidadeNO;
 	for (int i = 0; i < v.size(); ++i)
@@ -236,10 +201,11 @@ void caminhosGrafos(Thread grafo, vector<int> n){
 		fim = n[auxiliar+1];
 		tamanho = n[auxiliar+1]+1;
 		
-		//Zerando o vetor "vetorAuxCaminho"
+		///Liberando o espaço do vetor "vetorAuxCaminho"
 		while(!vetorAuxCaminho.empty()){
 			vetorAuxCaminho.pop_back();
 		}
+		///Liberando o espaço do vetor "vetorAuxCaminho"
 		while(!auxiliarCaminho.empty()){
 			auxiliarCaminho.pop_back();
 		}
@@ -248,11 +214,18 @@ void caminhosGrafos(Thread grafo, vector<int> n){
 		auxiliar++;
 	}
 }
+/** 
+* Função que faz a chamada da função de recursão e inicializa as variáveis.
+* @param inicio é um argumento inteiro.
+* @param fim é um argumento inteiro.
+* @param n é um argumento inteiro.
+* @param g é um argumento de mapeamento.
+*/
 
 void salvaTodosCaminhos(int inicio, int fim, int n, map < int,vector < int > > g){
-	// Vetor de vertices não visitados
+	/// Vetor de vertices não visitados
 	bool visitado[n];
-	//Vetor que armazena os caminhos
+	///Vetor que armazena os caminhos
 	int caminho[n];
 	int indiceCaminho= 0;
 
@@ -262,7 +235,14 @@ void salvaTodosCaminhos(int inicio, int fim, int n, map < int,vector < int > > g
 
 	salvaTodosCaminhosEncontrados(inicio,fim,visitado,caminho,indiceCaminho,g);
 }
-
+/** 
+* Função recursiva que salva todos os maiores caminhos.
+* @param inicio é um argumento inteiro.
+* @param fim é um argumento inteiro.
+* @param visitado[] é um argumento do tipo vetor boolean.
+* @param indiceCaminho é um argumento de endereço inteiro.
+* @param g é um argumento de mapeamento.
+*/
 void salvaTodosCaminhosEncontrados(int inicio, int fim, bool visitado[], int caminho[], int &indiceCaminho, map < int,vector < int > > g){
 	visitado[inicio] = true;
 	caminho[indiceCaminho] = inicio;
@@ -271,15 +251,12 @@ void salvaTodosCaminhosEncontrados(int inicio, int fim, bool visitado[], int cam
 		
 		for (int i = 0; i < indiceCaminho; ++i){
 			vetorAuxCaminho.push_back(caminho[i]);
-			//cout<<caminho[i]<<" ";
-			//mapTodosOsCaminhos[auxThread] = vetorAuxCaminho;
 		}
 		mapTodosOsCaminhos[auxThread] = vetorAuxCaminho;
 		auxiliarCaminho.push_back(vetorAuxCaminho); 
 		while(!vetorAuxCaminho.empty()){
 			vetorAuxCaminho.pop_back();
 		}
-		//cout<<endl;
 
 	}
 	else{
@@ -293,6 +270,9 @@ void salvaTodosCaminhosEncontrados(int inicio, int fim, bool visitado[], int cam
 	indiceCaminho--;
 	visitado[inicio] = false;
 }
+/** 
+* Função que inicializa um vector de pair onde é salvado o caminho de cada thread.
+*/
 void InicializarTuplas(){
 	map<string, vector<int> > :: iterator i;
 	pair<string, int> tuplaAux;
@@ -305,7 +285,12 @@ void InicializarTuplas(){
 	}
 
 }
-
+/** 
+* Função que simula a região crítica ordenando todos os caminhos possíveis.
+* @param t é um argumento do tipo Thread.
+* @param v é um argumento do tipo vector de string.
+* @param disponivel é um argumento do tipo vector de inteiro.
+*/
 void OrdenaCaminhos(Thread t, vector<string> v, vector<int> disponivel){
 
 	vector<pair<string,int> > :: iterator i;
@@ -318,12 +303,12 @@ void OrdenaCaminhos(Thread t, vector<string> v, vector<int> disponivel){
 	for (j = t.begin(); j != t.end(); ++j){
 		for (aux = j->second.begin(); aux != j->second.end(); ++aux)
 		{
-			vetorAux.push_back(j->first);
-			//cout<<j->first<<endl;	
+			vetorAux.push_back(j->first);	
 		}
 		
 	}
-	
+	///Faz a permutação de todas as sequências das possíveis combinações de caminho.
+	///Simulação da região crítica.
 	do{
 		vector<int> caminhoAleatorio;
 		maioresCaminhos = maioresCaminhosEstadoInicial;
@@ -337,27 +322,30 @@ void OrdenaCaminhos(Thread t, vector<string> v, vector<int> disponivel){
 			}
 		}
 
-		ImprimeVetor(caminhoAleatorio);
-		ImprimeVetor(disponivel);
 		if(AlgoritmoBanqueiro (t,v,disponivel,caminhoAleatorio) == true)
 			return;
 		
 	}while(resultado = next_permutation(vetorAux.begin(),vetorAux.end()));
 	
 }
+/** 
+* Função que analisa os tipos de nós de cada Grafo e analisa se contém DEADLOCK.
+* @param t é um argumento do tipo Thread.
+* @param v é um argumento do tipo vector de string.
+* @param disponivel é um argumento do tipo vector de inteiro.
+* @param combinacoes é um argumento do tipo vector de inteiro.
+*/
 bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel, vector<int> combinacoes){
 	
 
-	//vector<pair<string,int> > :: iterator i;
-	map<string,vector<int> > necessidade;
-	map<string,vector<int> > alocacao; //matriz de alocação
+	
+	map<string,vector<int> > necessidade;   /// Matriz de necessidade.
+	map<string,vector<int> > alocacao;     ///Matriz de alocação.
 	vector<int> iniciaVetor;
 	iniciaVetor.resize(disponivel.size());
 	Thread :: iterator inicial;		
-	
 
-	//ImprimeVetor(combinacoes);
-	//cout<<endl;
+	///Inicialização das duas matrizes com zeros.
 	for (inicial = t.begin(); inicial != t.end(); ++inicial){
 		necessidade[inicial->first] = iniciaVetor;
 		alocacao[inicial->first] = iniciaVetor;		
@@ -368,6 +356,7 @@ bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel, vec
 	stringstream buffer;
 	int pIF;
 	int pELSE;
+	///Identificação dos tipos existentes em cada nó do grafo.
 	for(int i=0; i<combinacoes.size();i++){
 			pIF = v[combinacoes[i]].find("if"); 
 			pELSE = v[combinacoes[i]].find("else");
@@ -375,68 +364,50 @@ bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel, vec
 				buffer<<v[combinacoes[i]];
 				buffer >> PeV[i]; 
 				buffer >> numeros[i]; 
-				cout << "PeV " << PeV[i] << " Numeros " << numeros[i] << "\n" << endl;
 				buffer.clear();
-			}else{
+			}
+			else{
 				PeV[i] = '*';
 				numeros[i] = -1;
 			}
 			
 	}
-	for(int i=0; i<combinacoes.size();i++){
-		cout << PeV[i] << endl;
-	}
+	
 	map<string, vector<int> > :: iterator aloc;
 	map<string, vector<int> > :: iterator nesc;		
 	string Threads;
 	
-	for(int i=0; i<combinacoes.size();i++){		
-		Threads = buscaThreads(t,combinacoes,i); // descobrimos de qual threads e o P ou v
-		cout<<"Thread: "<<Threads<<endl;			
-		if (PeV[i] == 'p'){  // encontramos o P
-			//Threads = EncontraThreads(t,combinacoes,i); // descobrimos de qual threads e o P 
-			cout<< "entrei no PPPPPPPPP:  " << endl;
+	for(int i=0; i<combinacoes.size();i++){
+		/// Encontrando de qual thread é o "p" ou "v"		
+		Threads = buscaThreads(t,combinacoes,i); 
+		/// Condição se for um "p"
+		if (PeV[i] == 'p'){  
 			for(aloc = alocacao.begin(),nesc=necessidade.begin(); aloc != alocacao.end()  && nesc != alocacao.end() ; aloc++,nesc++){	
-				if(aloc->first== Threads && nesc->first== Threads){				//descobrimos a coluna na matriz esta aquele ptem que alterar 
+				if(aloc->first== Threads && nesc->first== Threads){				
 					nesc->second[numeros[i]]++;
 					if(disponivel[numeros[i]]!= 0){
 						aloc->second[numeros[i]]++;
 						disponivel[numeros[i]]--;
 						nesc->second[numeros[i]]--;
-						//printf("esta travado\n");
+						
 					}
-					//else{
-						//printf("não esta travado\n");
-					//	aloc->second[numeros[i]]++;
-					//	disponivel[numeros[i]]--;
-					//	nesc->second[numeros[i]]--;
-					//}
 				}
 			}
 		}
 		if (PeV[i] == 'v'){
-			//Threads = EncontraThreads(t,combinacoes,i);
-			//cout<< "entrei no VVVVVVVVVVVVVVV:  " << endl;
+			/// Condição se for um "v"
 			for(aloc = alocacao.begin(),nesc=necessidade.begin(); aloc!= alocacao.end() && nesc!= alocacao.end() ; aloc++,nesc++){	
-				//printf("não tem menoria para liberar"); 
-				if(aloc->first == Threads ){				//descobrimos a coluna na matriz esta aquele ptem que alterar 
-					//cout << "ggggggggg"<< endl;
-				//	printf("não tem menoria para liberar"); 
+				if(aloc->first == Threads ){				
 					if(nesc->second[numeros[i]]>0){
 							nesc->second[numeros[i]]--;
 							aloc->second[numeros[i]]++;
 						
 						}
 					if(aloc->second[numeros[i]]==0){
-						//cout << "ggggggggg"<< endl;
-					//	printf("não tem menoria para liberar"); 
-							
 						map<string, vector<int> > :: iterator auxiliar;
 						auxiliar = alocacao.begin();
 						while(1){
-							cout << numeros[i] << endl;
 							if (auxiliar->second[numeros[i]] > 0){
-								cout <<"incrementa:" << auxiliar->second[numeros[i]]<< endl;
 								auxiliar->second[numeros[i]]--;
 								disponivel[numeros[i]]++;
 								if(nesc->second[numeros[i]] > 0){
@@ -448,7 +419,7 @@ bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel, vec
 							if(auxiliar == alocacao.end()){
 								break;
 							}
-						auxiliar++;
+							auxiliar++;
 						}
 					}
 					else{	
@@ -458,26 +429,25 @@ bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel, vec
 				}
 	 		}
 		}
-		//cout<< "disponivel" <<endl;
-		//ImprimeVetor(disponivel);
-		//cout<< "necessidade" <<endl;	
-		//ImprimeMapeamento(necessidade);
-		//cout<< "alocacao" <<endl;
-		//ImprimeMapeamento(alocacao);
+		
 		string auxiliarThreads;
 		if (EncontraDeadlock(necessidade,alocacao, disponivel) == true){
 			cout << "dead lock"<< endl;
 			for(int o=0; o<=i;o++){
 				auxiliarThreads = buscaThreads(t,combinacoes,o);
 				cout << auxiliarThreads<< ": "<< " " <<v[combinacoes[o]] << endl;
-			}//printar o caminhos com deadlock;
+			}
 			return true;	
 		}
-		//verificar matriz de nescessida se esta em deadlock
 	}
 	return false;
 }
-
+/** 
+* Função que busca a thread(grafo) que o nó pertence.
+* @param t é um argumento do tipo Thread.
+* @param combinacoes é um argumento do tipo vector de inteiro.
+* @param l é um argumento do tipo inteira
+*/
 string buscaThreads(Thread t, vector<int>combinacoes, int l){
 	
 	Thread :: iterator i;
@@ -494,6 +464,12 @@ string buscaThreads(Thread t, vector<int>combinacoes, int l){
 	string aux = "nao encontrado";
 	return aux;
 }
+/** 
+* Função que encontra deadlock.
+* @param necessidade é um argumento de mapeamento.
+* @param alocacao é um argumento de mapeamento.
+* @param disponivel é um argumento do tipo vector de inteiro.
+*/
 bool EncontraDeadlock (map<string, vector<int> > necessidade, map<string, vector<int> > alocacao, vector <int> disponivel){
 	int deadlock = 0;
 	vector<bool> termino;
@@ -514,9 +490,9 @@ bool EncontraDeadlock (map<string, vector<int> > necessidade, map<string, vector
 		}
 		if(cont != aloc->second.size()){
 			termino[k] = false;
-			//cout << "termino["<<k<<"]: "<< termino[k] << endl;		
-			}
-	k++;
+			
+		}
+		k++;
 	}
 	k=0;
 	for(aloc = alocacao.begin(),j = necessidade.begin(); aloc != alocacao.end() && j != necessidade.end() ; aloc++,j++){
@@ -525,7 +501,6 @@ bool EncontraDeadlock (map<string, vector<int> > necessidade, map<string, vector
 			for(int i = 0; i<j->second.size();i++){
 				if(j->second[i] <= disponivel[i]){
 					cont++;
-					//cout << "cont:  " << cont << endl;
 				}
 			}
 			if(cont == j->second.size()){
@@ -540,7 +515,7 @@ bool EncontraDeadlock (map<string, vector<int> > necessidade, map<string, vector
 	for(k =0; k<termino.size(); k++){
 		if(termino[k] == false){
 			deadlock++;
-			}
+		}
 	}
 	if(deadlock > 1){
 		return true;
