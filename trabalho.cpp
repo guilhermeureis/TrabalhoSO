@@ -348,7 +348,7 @@ void OrdenaCaminhos(Thread t, vector<string> v, vector<int> disponivel){
 bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel, vector<int> combinacoes){
 	
 
-	vector<pair<string,int> > :: iterator i;
+	//vector<pair<string,int> > :: iterator i;
 	map<string,vector<int> > necessidade;
 	map<string,vector<int> > alocacao; //matriz de alocação
 	vector<int> iniciaVetor;
@@ -366,21 +366,32 @@ bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel, vec
 	int numeros[combinacoes.size()];
 	char PeV[combinacoes.size()];
 	stringstream buffer;
-	
+	int pIF;
+	int pELSE;
 	for(int i=0; i<combinacoes.size();i++){
-			buffer<<v[combinacoes[i]];
-			buffer >> PeV[i]; 
-			buffer >> numeros[i]; 
-			//cout << "PeV " << PeV[i] << " Numeros " << numeros[i] << "\n" << endl;
-			buffer.clear();
+			pIF = v[combinacoes[i]].find("if"); 
+			pELSE = v[combinacoes[i]].find("else");
+			if((pIF<0) &&(pELSE<0)){
+				buffer<<v[combinacoes[i]];
+				buffer >> PeV[i]; 
+				buffer >> numeros[i]; 
+				cout << "PeV " << PeV[i] << " Numeros " << numeros[i] << "\n" << endl;
+				buffer.clear();
+			}else{
+				PeV[i] = '*';
+				numeros[i] = -1;
+			}
+			
 	}
-
+	for(int i=0; i<combinacoes.size();i++){
+		cout << PeV[i] << endl;
+	}
 	map<string, vector<int> > :: iterator aloc;
 	map<string, vector<int> > :: iterator nesc;		
 	string Threads;
 	
 	for(int i=0; i<combinacoes.size();i++){		
-		Threads = EncontraThreads(t,combinacoes,i); // descobrimos de qual threads e o P ou v
+		Threads = buscaThreads(t,combinacoes,i); // descobrimos de qual threads e o P ou v
 		cout<<"Thread: "<<Threads<<endl;			
 		if (PeV[i] == 'p'){  // encontramos o P
 			//Threads = EncontraThreads(t,combinacoes,i); // descobrimos de qual threads e o P 
@@ -420,11 +431,11 @@ bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel, vec
 						auxiliar = alocacao.begin();
 						while(1){
 							if (auxiliar->second[numeros[i]] > 0){
+								cout <<"incrementa:" << auxiliar->second[numeros[i]]<< endl;
 								auxiliar->second[numeros[i]]--;
 								disponivel[numeros[i]]++;
-								if(nesc->second[numeros[1]] > 0)
-											
-								break;		
+								if(nesc->second[numeros[i]] > 0)
+									break;		
 							}
 							if(auxiliar == alocacao.end()){
 								break;
@@ -439,18 +450,18 @@ bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel, vec
 				}
 	 		}
 		}
-		cout<< "disponivel" <<endl;
-		ImprimeVetor(disponivel);
-		cout<< "necessidade" <<endl;	
-		ImprimeMapeamento(necessidade);
-		cout<< "alocacao" <<endl;
-		ImprimeMapeamento(alocacao);
-
+		//cout<< "disponivel" <<endl;
+		//ImprimeVetor(disponivel);
+		//cout<< "necessidade" <<endl;	
+		//ImprimeMapeamento(necessidade);
+		//cout<< "alocacao" <<endl;
+		//ImprimeMapeamento(alocacao);
+		string auxiliarThreads;
 		if (EncontraDeadlock(necessidade,alocacao, disponivel) == true){
 			cout << "dead lock"<< endl;
 			for(int o=0; o<=i;o++){
-				Threads = EncontraThreads(t,combinacoes,o);
-				cout << Threads<< ": " <<v[combinacoes[o]] << endl;
+				auxiliarThreads = buscaThreads(t,combinacoes,o);
+				cout << auxiliarThreads<< ": "<< " " <<v[combinacoes[o]] << endl;
 			}//printar o caminhos com deadlock;
 			return true;	
 		}
@@ -459,7 +470,7 @@ bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel, vec
 	return false;
 }
 
-string EncontraThreads(Thread t, vector<int>combinacoes, int l){
+string buscaThreads(Thread t, vector<int>combinacoes, int l){
 	
 	Thread :: iterator i;
 	map<int, vector<int> > :: iterator j;
@@ -470,9 +481,6 @@ string EncontraThreads(Thread t, vector<int>combinacoes, int l){
 				string threads = i->first;
 				return threads;
 			}
-			//for (int k = 0; k < j->second.size(); ++k){
-			//	cout<<i->first<<" "<<j->first<<" "<<j->second[k]<<endl;
-			//}
 		}
 	}
 	string aux = "nao encontrado";
