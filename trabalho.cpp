@@ -297,7 +297,7 @@ void OrdenaCaminhos(Thread t, vector<string> v, vector<int> disponivel){
 	map<int, vector<int> > :: iterator aux;
 	Thread :: iterator j;
 	vector<string> vetorAux;
-	bool resultado;
+	bool resultado,flag;
 	//
 	vector<pair<string,int> > maioresCaminhosEstadoInicial = maioresCaminhos;
 	for (j = t.begin(); j != t.end(); ++j){
@@ -310,6 +310,7 @@ void OrdenaCaminhos(Thread t, vector<string> v, vector<int> disponivel){
 	///Faz a permutação de todas as sequências das possíveis combinações de caminho.
 	///Simulação da região crítica.
 	do{
+		flag = true;
 		vector<int> caminhoAleatorio;
 		maioresCaminhos = maioresCaminhosEstadoInicial;
 		for (int k = 0; k<vetorAux.size(); ++k){
@@ -322,11 +323,14 @@ void OrdenaCaminhos(Thread t, vector<string> v, vector<int> disponivel){
 			}
 		}
 
-		if(AlgoritmoBanqueiro (t,v,disponivel,caminhoAleatorio) == true)
-			return;
-		
+		if(AlgoritmoBanqueiro (t,v,disponivel,caminhoAleatorio) == true){
+			flag=false;
+			break;
+		}	
 	}while(resultado = next_permutation(vetorAux.begin(),vetorAux.end()));
-	
+	if(flag==true){
+		cout << "programa livre de impasse. " << endl;
+	}
 }
 /** 
 * Função que analisa os tipos de nós de cada Grafo e analisa se contém DEADLOCK.
@@ -432,7 +436,6 @@ bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel, vec
 		
 		string auxiliarThreads;
 		if (EncontraDeadlock(necessidade,alocacao, disponivel) == true){
-			cout << "dead lock"<< endl;
 			for(int o=0; o<=i;o++){
 				auxiliarThreads = buscaThreads(t,combinacoes,o);
 				cout << auxiliarThreads<< ": "<< " " <<v[combinacoes[o]] << endl;
