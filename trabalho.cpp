@@ -1,3 +1,12 @@
+/**
+*	@file trabalho.cpp 
+*	@brief Determina se uma sequencia de passo está em deadlock.
+*
+*	@author Filipe Nascimento Caniçali
+*	@author Guilherme uliana dos Reis 
+*
+*/
+
 #include "header.h"
 
 ///Variaveis Globais

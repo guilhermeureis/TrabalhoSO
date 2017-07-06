@@ -1,3 +1,12 @@
+/**
+*	@file header.h 
+*	@brief Arquivo que contem as assinaturas das funçoes utilizadas no trabalho
+*
+*
+*	@author Filipe Nascimento Caniçali
+*	@author Guilherme uliana dos Reis 
+*
+*/
 #ifndef HEADER_H
 #define HEADER_H
 
