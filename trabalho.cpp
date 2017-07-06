@@ -4,8 +4,8 @@
 *
 *	@section Introdução
 *
-*	Trabalho consiste e analisar uma sequência afim de verificar se um programa está suscetivel a deadlock
-	monstrando a sequência que deu deadlock.	
+*	Trabalho consiste em analisar uma sequência, afim de verificar se um programa está suscetível a deadlock,
+	monstrando a sequência que encontra o deadlock.	
 *
 *	@author Filipe Nascimento Caniçali
 *	@author Guilherme uliana dos Reis 
