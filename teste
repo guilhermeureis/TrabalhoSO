@@ -9,5 +9,6 @@ thread f1
 		v 1
 
 thread f2
-	v 0
 	p 1
+	p 1
+	v 1

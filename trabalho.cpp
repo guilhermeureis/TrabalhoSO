@@ -416,26 +416,34 @@ bool AlgoritmoBanqueiro (Thread t, vector<string> v, vector<int> disponivel, vec
 		}
 		if (PeV[i] == 'v'){
 			//Threads = EncontraThreads(t,combinacoes,i);
-			cout<< "entrei no VVVVVVVVVVVVVVV:  " << endl;	
+			//cout<< "entrei no VVVVVVVVVVVVVVV:  " << endl;
 			for(aloc = alocacao.begin(),nesc=necessidade.begin(); aloc!= alocacao.end() && nesc!= alocacao.end() ; aloc++,nesc++){	
+				//printf("não tem menoria para liberar"); 
 				if(aloc->first == Threads ){				//descobrimos a coluna na matriz esta aquele ptem que alterar 
-					/*if(nesc->second[numeros[i]]>0){
+					//cout << "ggggggggg"<< endl;
+				//	printf("não tem menoria para liberar"); 
+					if(nesc->second[numeros[i]]>0){
 							nesc->second[numeros[i]]--;
 							aloc->second[numeros[i]]++;
 						
-						}*/
+						}
 					if(aloc->second[numeros[i]]==0){
-						//printf("não tem menoria para liberar"); 
+						//cout << "ggggggggg"<< endl;
+					//	printf("não tem menoria para liberar"); 
 							
 						map<string, vector<int> > :: iterator auxiliar;
 						auxiliar = alocacao.begin();
 						while(1){
+							cout << numeros[i] << endl;
 							if (auxiliar->second[numeros[i]] > 0){
 								cout <<"incrementa:" << auxiliar->second[numeros[i]]<< endl;
 								auxiliar->second[numeros[i]]--;
 								disponivel[numeros[i]]++;
-								if(nesc->second[numeros[i]] > 0)
+								if(nesc->second[numeros[i]] > 0){
+									nesc->second[numeros[i]]--;
+									aloc->second[numeros[i]]++;
 									break;		
+								}
 							}
 							if(auxiliar == alocacao.end()){
 								break;
